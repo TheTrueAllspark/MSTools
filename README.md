@@ -1,5 +1,4 @@
-
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,48 +14,40 @@
             padding: 20px;
             background-color: #f5f7fa;
         }
-        
         h1 {
             color: #2c3e50;
             text-align: center;
             margin-bottom: 30px;
         }
-        
         .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
-        
         .form-section, .preview-section {
             background-color: white;
             padding: 25px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
         .preview-section {
             position: relative;
         }
-        
         h2 {
             color: #3498db;
             margin-top: 0;
             border-bottom: 2px solid #f0f0f0;
             padding-bottom: 10px;
         }
-        
         .form-group {
             margin-bottom: 20px;
         }
-        
         .conditional-field {
             padding: 15px;
             border-left: 3px solid #3498db;
             background-color: #f1f9ff;
             display: none;
         }
-        
         .add-more-link {
             color: #3498db;
             cursor: pointer;
@@ -66,7 +57,6 @@
             margin-bottom: 20px;
             text-decoration: underline;
         }
-        
         .delete-group-btn {
             background-color: #e74c3c;
             color: white;
@@ -78,7 +68,6 @@
             margin-top: 10px;
             margin-bottom: 20px;
         }
-        
         .additional-part-group {
             border-left: 3px solid #3498db;
             padding-left: 15px;
@@ -87,14 +76,12 @@
             padding: 15px;
             border-radius: 4px;
         }
-        
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
             color: #555;
         }
-        
         input[type="text"], textarea, select {
             width: 100%;
             padding: 12px;
@@ -104,12 +91,10 @@
             font-size: 15px;
             box-sizing: border-box;
         }
-        
         textarea {
             min-height: 100px;
             resize: vertical;
         }
-        
         .btn {
             background-color: #3498db;
             color: white;
@@ -124,34 +109,27 @@
             align-items: center;
             justify-content: center;
         }
-        
         .btn:hover {
             background-color: #2980b9;
         }
-        
         .btn-copy {
             background-color: #27ae60;
             margin-left: 10px;
         }
-        
         .btn-copy:hover {
             background-color: #219653;
         }
-        
         .btn-reset {
             background-color: #e74c3c;
         }
-        
         .btn-reset:hover {
             background-color: #c0392b;
         }
-        
         .button-group {
             display: flex;
             margin-top: 20px;
             gap: 10px;
         }
-        
         #preview {
             background-color: #f9f9f9;
             padding: 20px;
@@ -165,7 +143,6 @@
             overflow-y: auto;
             line-height: 1.5;
         }
-        
         .copy-message {
             position: absolute;
             top: 25px;
@@ -178,15 +155,12 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
-        
         .copy-message.show {
             opacity: 1;
         }
-        
         .template-controls {
             margin-bottom: 30px;
         }
-        
         select {
             padding: 10px;
             border-radius: 4px;
@@ -194,7 +168,6 @@
             font-size: 15px;
             margin-right: 10px;
         }
-
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -204,11 +177,9 @@
 </head>
 <body>
     <h1>Note Template Generator</h1>
-    
     <div class="container">
         <div class="form-section">
             <h2>Template Input</h2>
-            
             <div class="template-controls">
                 <label for="template-select">Choose a template:</label>
                 <select id="template-select">
@@ -220,12 +191,10 @@
                     <option value="custom">Custom Template</option>
                 </select>
             </div>
-            
             <form id="template-form">
                 <!-- Fields will be dynamically generated here -->
             </form>
         </div>
-        
         <div class="preview-section">
             <h2>Note Preview</h2>
             <div id="preview">Your compiled note will appear here...</div>
@@ -237,7 +206,6 @@
             <div class="copy-message" id="copy-message">Note copied to clipboard!</div>
         </div>
     </div>
-
     <script>
         // Template definitions
         const templates = {
@@ -266,7 +234,6 @@ ESCALATION DETAILS:
 - Escalated To: ${data.escalatedTo || "[Not specified]"}
 - Senior Tech Approval: ${data.seniorTechAlias || "[Not specified]"}`;
                     }
-                    
                     return `TASK ID: ${data.taskId || "[No ID]"}
 ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
 TASK REVIEWED: ${data.taskReviewed || "N/A"}
@@ -313,7 +280,6 @@ ESCALATION DETAILS:
 - Escalated To: ${data.escalatedTo || "[Not specified]"}
 - Senior Tech Approval: ${data.seniorTechAlias || "[Not specified]"}`;
                     }
-                    
                     return `TASK ID: ${data.taskId || "[No ID]"}
 ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
 TASK REVIEWED: ${data.taskReviewed || "N/A"}
@@ -387,35 +353,6 @@ REQUIRED RESOURCES:
 ${data.resources || "[None specified]"}`;
                 }
             },
-            custom: {
-                title: "Custom Template",
-                fields: [
-                    { name: "customTitle", label: "Note Title", type: "text" },
-                    { name: "customTemplate", label: "Custom Template (Use ## to denote where input values will go)", type: "textarea" },
-                    { name: "customValues", label: "Values (one per line, in order of ##)", type: "textarea" }
-                ],
-                format: (data) => {
-                    let result = `${data.customTitle || "Custom Note"}\n\n`;
-                    
-                    if (data.customTemplate) {
-                        let template = data.customTemplate;
-                        const values = data.customValues ? data.customValues.split('\n').filter(v => v.trim()) : [];
-                        
-                        values.forEach((value, index) => {
-                            template = template.replace('##', value);
-                        });
-                        
-                        // Replace any remaining ## with blank
-                        template = template.replace(/##/g, '[empty]');
-                        
-                        result += template;
-                    } else {
-                        result += "[No custom template defined]";
-                    }
-                    
-                    return result;
-                }
-            },
             workwindow: {
                 title: "Work Window Request Email",
                 fields: [
@@ -432,13 +369,35 @@ We need to schedule a work window for task # ${data.taskId || "SlotA"}. The next
 
 NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that SS can confirm availability. Important! Please remove traffic if necessary to facilitate a timely start for the WW event.`;
                 }
+            },
+            custom: {
+                title: "Custom Template",
+                fields: [
+                    { name: "customTitle", label: "Note Title", type: "text" },
+                    { name: "customTemplate", label: "Custom Template (Use ## to denote where input values will go)", type: "textarea" },
+                    { name: "customValues", label: "Values (one per line, in order of ##)", type: "textarea" }
+                ],
+                format: (data) => {
+                    let result = `${data.customTitle || "Custom Note"}\n\n`;
+                    if (data.customTemplate) {
+                        let template = data.customTemplate;
+                        const values = data.customValues ? data.customValues.split('\n').filter(v => v.trim()) : [];
+                        values.forEach((value, index) => {
+                            template = template.replace('##', value);
+                        });
+                        // Replace any remaining ## with blank
+                        template = template.replace(/##/g, '[empty]');
+                        result += template;
+                    } else {
+                        result += "[No custom template defined]";
+                    }
+                    return result;
+                }
             }
         };
-
         // Current template
         let currentTemplate = 'breakfix';
         let additionalPartsCounter = 0;
-        
         // DOM elements
         const templateForm = document.getElementById('template-form');
         const previewDiv = document.getElementById('preview');
@@ -447,36 +406,26 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
         const copyBtn = document.getElementById('copy-btn');
         const resetBtn = document.getElementById('reset-btn');
         const copyMessage = document.getElementById('copy-message');
-        
         // Initialize with the default template
         generateFormFields();
-        
         // Add change event listener to the template select
         templateSelect.addEventListener('change', changeTemplate);
-        
         // Function to change template
         function changeTemplate() {
             currentTemplate = templateSelect.value;
             generateFormFields();
             updatePreview();
-            if (currentTemplate === 'breakfix' || currentTemplate === 'networking') {
-                ensureAddMoreButtonIsLast();
-            }
         }
-        
         // Function to generate form fields based on selected template
         function generateFormFields() {
             templateForm.innerHTML = '';
             additionalPartsCounter = 0;
-            
             const template = templates[currentTemplate];
-            
             template.fields.forEach((field, index) => {
                 // Skip conditional fields initially
                 if (field.conditionalOn && !shouldShowConditionalField(field)) {
                     return;
                 }
-                
                 const formGroup = document.createElement('div');
                 formGroup.className = 'form-group';
                 if (field.conditionalOn) {
@@ -484,11 +433,9 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     formGroup.setAttribute('data-depends-on', field.conditionalOn.field);
                     formGroup.setAttribute('data-depends-value', field.conditionalOn.value);
                 }
-                
                 const label = document.createElement('label');
                 label.setAttribute('for', field.name);
                 label.textContent = field.label;
-                
                 let input;
                 if (field.type === 'textarea') {
                     input = document.createElement('textarea');
@@ -499,7 +446,6 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     emptyOption.value = '';
                     emptyOption.textContent = '-- Select --';
                     input.appendChild(emptyOption);
-                    
                     // Add the rest of the options
                     field.options.forEach(optionText => {
                         const option = document.createElement('option');
@@ -507,7 +453,6 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                         option.textContent = optionText;
                         input.appendChild(option);
                     });
-                    
                     // For fields that trigger conditional fields
                     if (field.hasConditionalFields) {
                         input.addEventListener('change', handleConditionalFields);
@@ -516,28 +461,23 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     input = document.createElement('input');
                     input.type = field.type;
                 }
-                
                 input.id = field.name;
                 input.name = field.name;
                 input.addEventListener('input', updatePreview);
-                
                 formGroup.appendChild(label);
                 formGroup.appendChild(input);
                 templateForm.appendChild(formGroup);
-                
                 // Create container for additional parts after the License Plate field
                 if (field.name === 'licensePlate' && (currentTemplate === 'breakfix' || currentTemplate === 'networking')) {
                     // Add container for additional parts
                     const additionalPartsContainer = document.createElement('div');
                     additionalPartsContainer.id = 'additional-parts-container';
                     templateForm.appendChild(additionalPartsContainer);
-                    
                     // Add the "Add More Parts" link initially after the main part fields
                     addAddMoreButton(templateForm);
                 }
             });
         }
-        
         // Function to add the "Add More Parts" button
         function addAddMoreButton(parentElement) {
             // Remove any existing add more button first
@@ -545,145 +485,27 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             if (existingButton) {
                 existingButton.remove();
             }
-            
             // Create a new add more button
             const addMoreContainer = document.createElement('div');
             addMoreContainer.id = 'add-more-container';
-            
             const addMoreLink = document.createElement('div');
             addMoreLink.className = 'add-more-link';
             addMoreLink.textContent = '+ Add More Parts';
             addMoreLink.addEventListener('click', addMoreParts);
-            
             addMoreContainer.appendChild(addMoreLink);
             parentElement.appendChild(addMoreContainer);
         }
-        
-        // Function to add more parts
-        function addMoreParts() {
-            additionalPartsCounter++;
-            const container = document.getElementById('additional-parts-container');
-            
-            const partGroup = document.createElement('div');
-            partGroup.className = 'additional-part-group';
-            partGroup.id = `additional-part-${additionalPartsCounter}`;
-            
-            // Create a heading for the additional part
-            const heading = document.createElement('h4');
-            heading.textContent = `Additional Part ${additionalPartsCounter}`;
-            heading.style.marginTop = '0';
-            partGroup.appendChild(heading);
-            
-            // Create Old Serial Number field
-            const oldSerialGroup = document.createElement('div');
-            oldSerialGroup.className = 'form-group';
-            
-            const oldSerialLabel = document.createElement('label');
-            oldSerialLabel.setAttribute('for', `oldSerialNumber${additionalPartsCounter}`);
-            oldSerialLabel.textContent = 'Old Serial Number';
-            
-            const oldSerialInput = document.createElement('input');
-            oldSerialInput.type = 'text';
-            oldSerialInput.id = `oldSerialNumber${additionalPartsCounter}`;
-            oldSerialInput.name = `oldSerialNumber${additionalPartsCounter}`;
-            oldSerialInput.addEventListener('input', updatePreview);
-            
-            oldSerialGroup.appendChild(oldSerialLabel);
-            oldSerialGroup.appendChild(oldSerialInput);
-            partGroup.appendChild(oldSerialGroup);
-            
-            // Create New Serial Number field
-            const newSerialGroup = document.createElement('div');
-            newSerialGroup.className = 'form-group';
-            
-            const newSerialLabel = document.createElement('label');
-            newSerialLabel.setAttribute('for', `newSerialNumber${additionalPartsCounter}`);
-            newSerialLabel.textContent = 'New Serial Number';
-            
-            const newSerialInput = document.createElement('input');
-            newSerialInput.type = 'text';
-            newSerialInput.id = `newSerialNumber${additionalPartsCounter}`;
-            newSerialInput.name = `newSerialNumber${additionalPartsCounter}`;
-            newSerialInput.addEventListener('input', updatePreview);
-            
-            newSerialGroup.appendChild(newSerialLabel);
-            newSerialGroup.appendChild(newSerialInput);
-            partGroup.appendChild(newSerialGroup);
-            
-            // Create License Plate field
-            const licensePlateGroup = document.createElement('div');
-            licensePlateGroup.className = 'form-group';
-            
-            const licensePlateLabel = document.createElement('label');
-            licensePlateLabel.setAttribute('for', `licensePlate${additionalPartsCounter}`);
-            licensePlateLabel.textContent = 'License Plate';
-            
-            const licensePlateInput = document.createElement('input');
-            licensePlateInput.type = 'text';
-            licensePlateInput.id = `licensePlate${additionalPartsCounter}`;
-            licensePlateInput.name = `licensePlate${additionalPartsCounter}`;
-            licensePlateInput.addEventListener('input', updatePreview);
-            
-            licensePlateGroup.appendChild(licensePlateLabel);
-            licensePlateGroup.appendChild(licensePlateInput);
-            partGroup.appendChild(licensePlateGroup);
-            
-            // Add Delete button with unique ID for better targeting
-            const deleteButton = document.createElement('button');
-            deleteButton.className = 'delete-group-btn';
-            deleteButton.textContent = 'Delete this part';
-            deleteButton.id = `delete-part-${additionalPartsCounter}`;
-            deleteButton.setAttribute('type', 'button'); // Prevent form submission
-            deleteButton.setAttribute('data-part-id', additionalPartsCounter);
-            
-            // Add click event with proper context
-            deleteButton.onclick = function() {
-                const partId = this.getAttribute('data-part-id');
-                deletePartGroup(partId);
-            };
-            
-            partGroup.appendChild(deleteButton);
-            container.appendChild(partGroup);
-            
-            updatePreview();
-            
-            // Move the Add More button after the most recently added part
-            addAddMoreButton(container);
-        }
-        
-        // Function to ensure the Add More button is always last
-        function ensureAddMoreButtonIsLast() {
-            const addMoreContainer = document.getElementById('add-more-container');
-            if (addMoreContainer) {
-                const form = document.getElementById('template-form');
-                form.appendChild(addMoreContainer);
-            }
-        }
-        
-        // Function to delete a part group
-        function deletePartGroup(partId) {
-            const partGroup = document.getElementById(`additional-part-${partId}`);
-            if (partGroup) {
-                partGroup.remove();
-                updatePreview();
-                ensureAddMoreButtonIsLast();
-            }
-        }
-        
         // Function to check if conditional field should be shown
         function shouldShowConditionalField(field) {
             if (!field.conditionalOn) return true;
-            
             const dependsOnField = document.getElementById(field.conditionalOn.field);
             return dependsOnField && dependsOnField.value === field.conditionalOn.value;
         }
-        
         // Function to handle showing/hiding conditional fields
         function handleConditionalFields(event) {
             const triggerField = event.target;
             const triggerValue = triggerField.value;
             const conditionalFields = document.querySelectorAll(`.conditional-field[data-depends-on="${triggerField.id}"]`);
-            
             conditionalFields.forEach(field => {
                 const requiredValue = field.getAttribute('data-depends-value');
                 if (triggerValue === requiredValue) {
@@ -697,16 +519,107 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     });
                 }
             });
-            
             // Update preview after handling conditional fields
             updatePreview();
         }
-        
+        // Function to add more parts
+        function addMoreParts() {
+            additionalPartsCounter++;
+            const container = document.getElementById('additional-parts-container');
+            const partGroup = document.createElement('div');
+            partGroup.className = 'additional-part-group';
+            partGroup.id = `additional-part-${additionalPartsCounter}`;
+            // Create a heading for the additional part
+            const heading = document.createElement('h4');
+            heading.textContent = `Additional Part ${additionalPartsCounter}`;
+            heading.style.marginTop = '0';
+            partGroup.appendChild(heading);
+            // Create Old Serial Number field
+            const oldSerialGroup = document.createElement('div');
+            oldSerialGroup.className = 'form-group';
+            const oldSerialLabel = document.createElement('label');
+            oldSerialLabel.setAttribute('for', `oldSerialNumber${additionalPartsCounter}`);
+            oldSerialLabel.textContent = 'Old Serial Number';
+            const oldSerialInput = document.createElement('input');
+            oldSerialInput.type = 'text';
+            oldSerialInput.id = `oldSerialNumber${additionalPartsCounter}`;
+            oldSerialInput.name = `oldSerialNumber${additionalPartsCounter}`;
+            oldSerialInput.addEventListener('input', updatePreview);
+            oldSerialGroup.appendChild(oldSerialLabel);
+            oldSerialGroup.appendChild(oldSerialInput);
+            partGroup.appendChild(oldSerialGroup);
+            // Create New Serial Number field
+            const newSerialGroup = document.createElement('div');
+            newSerialGroup.className = 'form-group';
+            const newSerialLabel = document.createElement('label');
+            newSerialLabel.setAttribute('for', `newSerialNumber${additionalPartsCounter}`);
+            newSerialLabel.textContent = 'New Serial Number';
+            const newSerialInput = document.createElement('input');
+            newSerialInput.type = 'text';
+            newSerialInput.id = `newSerialNumber${additionalPartsCounter}`;
+            newSerialInput.name = `newSerialNumber${additionalPartsCounter}`;
+            newSerialInput.addEventListener('input', updatePreview);
+            newSerialGroup.appendChild(newSerialLabel);
+            newSerialGroup.appendChild(newSerialInput);
+            partGroup.appendChild(newSerialGroup);
+            // Create License Plate field
+            const licensePlateGroup = document.createElement('div');
+            licensePlateGroup.className = 'form-group';
+            const licensePlateLabel = document.createElement('label');
+            licensePlateLabel.setAttribute('for', `licensePlate${additionalPartsCounter}`);
+            licensePlateLabel.textContent = 'License Plate';
+            const licensePlateInput = document.createElement('input');
+            licensePlateInput.type = 'text';
+            licensePlateInput.id = `licensePlate${additionalPartsCounter}`;
+            licensePlateInput.name = `licensePlate${additionalPartsCounter}`;
+            licensePlateInput.addEventListener('input', updatePreview);
+            licensePlateGroup.appendChild(licensePlateLabel);
+            licensePlateGroup.appendChild(licensePlateInput);
+            partGroup.appendChild(licensePlateGroup);
+            // Add Delete button with unique ID for better targeting
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'delete-group-btn';
+            deleteButton.textContent = 'Delete this part';
+            deleteButton.id = `delete-part-${additionalPartsCounter}`;
+            deleteButton.setAttribute('type', 'button'); // Prevent form submission
+            deleteButton.setAttribute('data-part-id', additionalPartsCounter);
+            // Add click event with proper context
+            deleteButton.onclick = function() {
+                const partId = this.getAttribute('data-part-id');
+                deletePartGroup(partId);
+            };
+            partGroup.appendChild(deleteButton);
+            container.appendChild(partGroup);
+            updatePreview();
+            // Move the Add More button after the most recently added part
+            addAddMoreButton(container);
+        }
+        // Function to delete a part group
+        function deletePartGroup(partId) {
+            // Convert partId to string if it's not already
+            partId = String(partId);
+            const partGroup = document.getElementById(`additional-part-${partId}`);
+            if (partGroup) {
+                // Remove the part group from the DOM
+                partGroup.remove();
+                updatePreview();
+                // Reposition the Add More button after the last part
+                // or after the main form if no additional parts remain
+                const container = document.getElementById('additional-parts-container');
+                const parts = container.querySelectorAll('.additional-part-group');
+                if (parts.length > 0) {
+                    addAddMoreButton(container);
+                } else {
+                    addAddMoreButton(templateForm);
+                }
+            } else {
+                console.error(`Could not find element with ID additional-part-${partId}`);
+            }
+        }
         // Function to update preview as user types
         function updatePreview() {
             const formData = {};
             const template = templates[currentTemplate];
-            
             // Collect values from regular fields
             template.fields.forEach(field => {
                 const input = document.getElementById(field.name);
@@ -714,11 +627,9 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     formData[field.name] = input.value;
                 }
             });
-            
             // Collect values from additional parts
             if ((currentTemplate === 'breakfix' || currentTemplate === 'networking')) {
                 formData.additionalParts = [];
-                
                 // Look for all additional parts in the DOM
                 for (let i = 1; i <= additionalPartsCounter; i++) {
                     const partGroup = document.getElementById(`additional-part-${i}`);
@@ -726,7 +637,6 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                         const oldSerial = document.getElementById(`oldSerialNumber${i}`);
                         const newSerial = document.getElementById(`newSerialNumber${i}`);
                         const licensePlate = document.getElementById(`licensePlate${i}`);
-                        
                         if (oldSerial && newSerial && licensePlate) {
                             formData.additionalParts.push({
                                 id: i,
@@ -738,14 +648,11 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     }
                 }
             }
-            
             // Format the note with additional parts
             let formattedNote = template.format(formData);
-            
             // Add additional parts info to the formatted note
             if ((currentTemplate === 'breakfix' || currentTemplate === 'networking') && formData.additionalParts && formData.additionalParts.length > 0) {
                 formattedNote += '\n\nADDITIONAL PARTS:';
-                
                 formData.additionalParts.forEach((part, index) => {
                     formattedNote += `\n\nPART #${index + 2}:
 OLD SERIAL NUMBER: ${part.oldSerialNumber || "N/A"}
@@ -753,16 +660,13 @@ NEW SERIAL NUMBER: ${part.newSerialNumber || "N/A"}
 LICENSE PLATE: ${part.licensePlate || "N/A"}`;
                 });
             }
-            
             previewDiv.textContent = formattedNote;
         }
-        
         // Complete button click handler
         completeBtn.addEventListener('click', () => {
             updatePreview(); // Ensure preview is current
             previewDiv.focus();
         });
-        
         // Copy button click handler
         copyBtn.addEventListener('click', () => {
             const noteText = previewDiv.textContent;
@@ -773,29 +677,24 @@ LICENSE PLATE: ${part.licensePlate || "N/A"}`;
                 }, 2000);
             });
         });
-        
         // Reset button click handler
         resetBtn.addEventListener('click', () => {
             templateForm.reset();
-            
             // Also reset any conditional fields
             const conditionalFields = document.querySelectorAll('.conditional-field');
             conditionalFields.forEach(field => {
                 field.style.display = 'none';
             });
-            
             // Remove any additional parts
             const additionalPartsContainer = document.getElementById('additional-parts-container');
             if (additionalPartsContainer) {
                 additionalPartsContainer.innerHTML = '';
             }
             additionalPartsCounter = 0;
-            
             // Reset the add more button position
             if (currentTemplate === 'breakfix' || currentTemplate === 'networking') {
                 addAddMoreButton(templateForm);
             }
-            
             updatePreview();
         });
     </script>
