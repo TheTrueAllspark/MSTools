@@ -254,7 +254,7 @@
                     { name: "licensePlate", label: "License Plate", type: "text" },
                     { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
                     { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"], hasConditionalFields: true },
-                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "Yes" } },
+                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text", conditionalOn: { data.wasEscalated === "Yes" } },
                     { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text", conditionalOn: { field: "wasEscalated", value: "Yes" } }
                 ],
                 format: (data) => {
