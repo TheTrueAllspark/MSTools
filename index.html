@@ -212,6 +212,7 @@
                 <label for="template-select">Choose a template:</label>
                 <select id="template-select">
                     <option value="breakfix">Break/Fix Task Notes</option>
+                    <option value="dbd">DBD Task Notes</option>
                     <option value="networking">Networking Task Notes</option>
                     <option value="meeting">Meeting Note</option>
                     <option value="project">Project Update</option>
@@ -253,9 +254,9 @@
                     { name: "newSerialNumber", label: "New Serial Number", type: "text" },
                     { name: "licensePlate", label: "License Plate", type: "text" },
                     { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
-                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"], hasConditionalFields: true },
-                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text"}, //, conditionalOn: { field: "wasEscalated", value: "Yes"  } },
-                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text"}, //conditionalOn: { field: "wasEscalated", value: "Yes" } }
+                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"] },
+                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text" },
+                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text" }
                 ],
                 format: (data) => {
                     let escalationInfo = "";
@@ -285,6 +286,57 @@ ${data.actionsTaken || "[No actions recorded]"}
 TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
                 }
             },
+            dbd: {
+                title: "DBD Task Notes",
+                fields: [
+                    { name: "taskId", label: "Task ID", type: "text" },
+                    { name: "assetTagConfirmed", label: "Was the asset tag visually confirmed?", type: "select", options: ["Yes", "No"] },
+                    { name: "taskReviewed", label: "Did you review the task?", type: "select", options: ["Yes", "No"] },
+                    { name: "notesReviewed", label: "Did you review the notes?", type: "select", options: ["Yes", "No"] },
+                    { name: "uponArrival", label: "Upon Arrival:", type: "textarea" },
+                    { name: "partReplaced", label: "Part(s) Replaced", type: "text" },
+                    { name: "oldSerialNumber", label: "Old Serial Number", type: "text" },
+                    { name: "newSerialNumber", label: "New Serial Number", type: "text" },
+                    { name: "licensePlate", label: "License Plate", type: "text" },
+                    { name: "driveLocation", label: "Location of drive being replaced", type: "text" },
+                    { name: "binNumber", label: "Bin #", type: "text" },
+                    { name: "properDiscard", label: "Was the drive discarded in the proper DBD bin?", type: "select", options: ["Yes", "No"] },
+                    { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
+                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"] },
+                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text" },
+                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text" } }
+                ],
+                format: (data) => {
+                    let escalationInfo = "";
+                    if (data.wasEscalated === "Yes") {
+                        escalationInfo = `
+ESCALATION DETAILS:
+- Escalated To: ${data.escalatedTo || "[Not specified]"}
+- Senior Tech Approval: ${data.seniorTechAlias || "[Not specified]"}`;
+                    }
+                    
+                    return `TASK ID: ${data.taskId || "[No ID]"}
+ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
+TASK REVIEWED: ${data.taskReviewed || "N/A"}
+NOTES REVIEWED: ${data.notesReviewed || "N/A"}
+
+UPON ARRIVAL:
+${data.uponArrival || "[No arrival notes recorded]"}
+
+PART(S) REPLACED: ${data.partReplaced || "N/A"}
+OLD SERIAL NUMBER: ${data.oldSerialNumber || "N/A"}
+NEW SERIAL NUMBER: ${data.newSerialNumber || "N/A"}
+LICENSE PLATE: ${data.licensePlate || "N/A"}
+DRIVE LOCATION: ${data.driveLocation || "N/A"}
+BIN #: ${data.binNumber || "N/A"}
+DRIVE DISCARDED IN PROPER DBD BIN: ${data.properDiscard || "N/A"}
+
+ACTIONS TAKEN:
+${data.actionsTaken || "[No actions recorded]"}
+
+TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
+                }
+            },
             networking: {
                 title: "Networking Task Notes",
                 fields: [
@@ -300,9 +352,9 @@ TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
                     { name: "newSerialNumber", label: "New Serial Number", type: "text" },
                     { name: "licensePlate", label: "License Plate", type: "text" },
                     { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
-                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"], hasConditionalFields: true },
-                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "Yes" } },
-                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text", conditionalOn: { field: "wasEscalated", value: "Yes" } }
+                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"] },
+                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text" },
+                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text" }
                 ],
                 format: (data) => {
                     let escalationInfo = "";
@@ -386,6 +438,23 @@ REQUIRED RESOURCES:
 ${data.resources || "[None specified]"}`;
                 }
             },
+            workwindow: {
+                title: "Work Window Request Email",
+                fields: [
+                    { name: "taskId", label: "Task ID", type: "text" },
+                    { name: "date", label: "Date", type: "text" },
+                    { name: "time", label: "Time", type: "text" }
+                ],
+                format: (data) => {
+                    return `WORK WINDOW REQUEST - TASK ID: ${data.taskId || "[No ID]"}
+
+Hello, 
+
+We need to schedule a work window for task # ${data.taskId || "SlotA"}. The next available date we have for this work window is ${data.date || "SlotB"} at ${data.time || "SlotC"}. Does this work for you? 
+
+NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that SS can confirm availability. Important! Please remove traffic if necessary to facilitate a timely start for the WW event.`;
+                }
+            },
             custom: {
                 title: "Custom Template",
                 fields: [
@@ -414,23 +483,6 @@ ${data.resources || "[None specified]"}`;
                     
                     return result;
                 }
-            },
-            workwindow: {
-                title: "Work Window Request Email",
-                fields: [
-                    { name: "taskId", label: "Task ID", type: "text" },
-                    { name: "date", label: "Date", type: "text" },
-                    { name: "time", label: "Time", type: "text" }
-                ],
-                format: (data) => {
-                    return `WORK WINDOW REQUEST - TASK ID: ${data.taskId || "[No ID]"}
-
-Hello, 
-
-We need to schedule a work window for task # ${data.taskId || "SlotA"}. The next available date we have for this work window is ${data.date || "SlotB"} at ${data.time || "SlotC"}. Does this work for you? 
-
-NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that SS can confirm availability. Important! Please remove traffic if necessary to facilitate a timely start for the WW event.`;
-                }
             }
         };
 
@@ -458,9 +510,6 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             currentTemplate = templateSelect.value;
             generateFormFields();
             updatePreview();
-            if (currentTemplate === 'breakfix' || currentTemplate === 'networking') {
-                ensureAddMoreButtonIsLast();
-            }
         }
         
         // Function to generate form fields based on selected template
@@ -525,7 +574,9 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                 templateForm.appendChild(formGroup);
                 
                 // Create container for additional parts after the License Plate field
-                if (field.name === 'licensePlate' && (currentTemplate === 'breakfix' || currentTemplate === 'networking')) {
+                if ((field.name === 'licensePlate' && currentTemplate === 'breakfix') ||
+                    (field.name === 'properDiscard' && currentTemplate === 'dbd') ||
+                    (field.name === 'licensePlate' && currentTemplate === 'networking')) {
                     // Add container for additional parts
                     const additionalPartsContainer = document.createElement('div');
                     additionalPartsContainer.id = 'additional-parts-container';
@@ -556,6 +607,38 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             
             addMoreContainer.appendChild(addMoreLink);
             parentElement.appendChild(addMoreContainer);
+        }
+        
+        // Function to check if conditional field should be shown
+        function shouldShowConditionalField(field) {
+            if (!field.conditionalOn) return true;
+            
+            const dependsOnField = document.getElementById(field.conditionalOn.field);
+            return dependsOnField && dependsOnField.value === field.conditionalOn.value;
+        }
+        
+        // Function to handle showing/hiding conditional fields
+        function handleConditionalFields(event) {
+            const triggerField = event.target;
+            const triggerValue = triggerField.value;
+            const conditionalFields = document.querySelectorAll(`.conditional-field[data-depends-on="${triggerField.id}"]`);
+            
+            conditionalFields.forEach(field => {
+                const requiredValue = field.getAttribute('data-depends-value');
+                if (triggerValue === requiredValue) {
+                    field.style.display = 'block';
+                } else {
+                    field.style.display = 'none';
+                    // Clear values in hidden fields
+                    const inputs = field.querySelectorAll('input, textarea, select');
+                    inputs.forEach(input => {
+                        input.value = '';
+                    });
+                }
+            });
+            
+            // Update preview after handling conditional fields
+            updatePreview();
         }
         
         // Function to add more parts
@@ -627,6 +710,76 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             licensePlateGroup.appendChild(licensePlateInput);
             partGroup.appendChild(licensePlateGroup);
             
+            // Create Drive Location field for DBD template
+            if (currentTemplate === 'dbd') {
+                const driveLocationGroup = document.createElement('div');
+                driveLocationGroup.className = 'form-group';
+                
+                const driveLocationLabel = document.createElement('label');
+                driveLocationLabel.setAttribute('for', `driveLocation${additionalPartsCounter}`);
+                driveLocationLabel.textContent = 'Location of drive being replaced';
+                
+                const driveLocationInput = document.createElement('input');
+                driveLocationInput.type = 'text';
+                driveLocationInput.id = `driveLocation${additionalPartsCounter}`;
+                driveLocationInput.name = `driveLocation${additionalPartsCounter}`;
+                driveLocationInput.addEventListener('input', updatePreview);
+                
+                driveLocationGroup.appendChild(driveLocationLabel);
+                driveLocationGroup.appendChild(driveLocationInput);
+                partGroup.appendChild(driveLocationGroup);
+                
+                // Create Bin # field for DBD template
+                const binNumberGroup = document.createElement('div');
+                binNumberGroup.className = 'form-group';
+                
+                const binNumberLabel = document.createElement('label');
+                binNumberLabel.setAttribute('for', `binNumber${additionalPartsCounter}`);
+                binNumberLabel.textContent = 'Bin #';
+                
+                const binNumberInput = document.createElement('input');
+                binNumberInput.type = 'text';
+                binNumberInput.id = `binNumber${additionalPartsCounter}`;
+                binNumberInput.name = `binNumber${additionalPartsCounter}`;
+                binNumberInput.addEventListener('input', updatePreview);
+                
+                binNumberGroup.appendChild(binNumberLabel);
+                binNumberGroup.appendChild(binNumberInput);
+                partGroup.appendChild(binNumberGroup);
+                
+                // Create Proper Discard field for DBD template
+                const properDiscardGroup = document.createElement('div');
+                properDiscardGroup.className = 'form-group';
+                
+                const properDiscardLabel = document.createElement('label');
+                properDiscardLabel.setAttribute('for', `properDiscard${additionalPartsCounter}`);
+                properDiscardLabel.textContent = 'Was the drive discarded in the proper DBD bin?';
+                
+                const properDiscardInput = document.createElement('select');
+                properDiscardInput.id = `properDiscard${additionalPartsCounter}`;
+                properDiscardInput.name = `properDiscard${additionalPartsCounter}`;
+                
+                // Add empty option
+                const emptyOption = document.createElement('option');
+                emptyOption.value = '';
+                emptyOption.textContent = '-- Select --';
+                properDiscardInput.appendChild(emptyOption);
+                
+                // Add Yes/No options
+                ["Yes", "No"].forEach(optionText => {
+                    const option = document.createElement('option');
+                    option.value = optionText;
+                    option.textContent = optionText;
+                    properDiscardInput.appendChild(option);
+                });
+                
+                properDiscardInput.addEventListener('input', updatePreview);
+                
+                properDiscardGroup.appendChild(properDiscardLabel);
+                properDiscardGroup.appendChild(properDiscardInput);
+                partGroup.appendChild(properDiscardGroup);
+            }
+            
             // Add Delete button with unique ID for better targeting
             const deleteButton = document.createElement('button');
             deleteButton.className = 'delete-group-btn';
@@ -650,55 +803,30 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             addAddMoreButton(container);
         }
         
-        // Function to ensure the Add More button is always last
-        function ensureAddMoreButtonIsLast() {
-            const addMoreContainer = document.getElementById('add-more-container');
-            if (addMoreContainer) {
-                const form = document.getElementById('template-form');
-                form.appendChild(addMoreContainer);
-            }
-        }
-        
         // Function to delete a part group
         function deletePartGroup(partId) {
+            // Convert partId to string if it's not already
+            partId = String(partId);
+            
             const partGroup = document.getElementById(`additional-part-${partId}`);
             if (partGroup) {
+                // Remove the part group from the DOM
                 partGroup.remove();
                 updatePreview();
-                ensureAddMoreButtonIsLast();
-            }
-        }
-        
-        // Function to check if conditional field should be shown
-        function shouldShowConditionalField(field) {
-            if (!field.conditionalOn) return true;
-            
-            const dependsOnField = document.getElementById(field.conditionalOn.field);
-            return dependsOnField && dependsOnField.value === field.conditionalOn.value;
-        }
-        
-        // Function to handle showing/hiding conditional fields
-        function handleConditionalFields(event) {
-            const triggerField = event.target;
-            const triggerValue = triggerField.value;
-            const conditionalFields = document.querySelectorAll(`.conditional-field[data-depends-on="${triggerField.id}"]`);
-            
-            conditionalFields.forEach(field => {
-                const requiredValue = field.getAttribute('data-depends-value');
-                if (triggerValue === requiredValue) {
-                    field.style.display = 'block';
+                
+                // Reposition the Add More button after the last part
+                // or after the main form if no additional parts remain
+                const container = document.getElementById('additional-parts-container');
+                const parts = container.querySelectorAll('.additional-part-group');
+                
+                if (parts.length > 0) {
+                    addAddMoreButton(container);
                 } else {
-                    field.style.display = 'none';
-                    // Clear values in hidden fields
-                    const inputs = field.querySelectorAll('input, textarea, select');
-                    inputs.forEach(input => {
-                        input.value = '';
-                    });
+                    addAddMoreButton(templateForm);
                 }
-            });
-            
-            // Update preview after handling conditional fields
-            updatePreview();
+            } else {
+                console.error(`Could not find element with ID additional-part-${partId}`);
+            }
         }
         
         // Function to update preview as user types
@@ -715,7 +843,7 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             });
             
             // Collect values from additional parts
-            if ((currentTemplate === 'breakfix' || currentTemplate === 'networking')) {
+            if (['breakfix', 'dbd', 'networking'].includes(currentTemplate)) {
                 formData.additionalParts = [];
                 
                 // Look for all additional parts in the DOM
@@ -727,12 +855,31 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                         const licensePlate = document.getElementById(`licensePlate${i}`);
                         
                         if (oldSerial && newSerial && licensePlate) {
-                            formData.additionalParts.push({
+                            const partData = {
                                 id: i,
                                 oldSerialNumber: oldSerial.value,
                                 newSerialNumber: newSerial.value,
                                 licensePlate: licensePlate.value
-                            });
+                            };
+                            
+                            // Add drive location, bin number and proper discard for DBD template
+                            if (currentTemplate === 'dbd') {
+                                const driveLocation = document.getElementById(`driveLocation${i}`);
+                                const binNumber = document.getElementById(`binNumber${i}`);
+                                const properDiscard = document.getElementById(`properDiscard${i}`);
+                                
+                                if (driveLocation) {
+                                    partData.driveLocation = driveLocation.value;
+                                }
+                                if (binNumber) {
+                                    partData.binNumber = binNumber.value;
+                                }
+                                if (properDiscard) {
+                                    partData.properDiscard = properDiscard.value;
+                                }
+                            }
+                            
+                            formData.additionalParts.push(partData);
                         }
                     }
                 }
@@ -742,14 +889,32 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             let formattedNote = template.format(formData);
             
             // Add additional parts info to the formatted note
-            if ((currentTemplate === 'breakfix' || currentTemplate === 'networking') && formData.additionalParts && formData.additionalParts.length > 0) {
+            if (['breakfix', 'dbd', 'networking'].includes(currentTemplate) && 
+                formData.additionalParts && 
+                formData.additionalParts.length > 0) {
+                
                 formattedNote += '\n\nADDITIONAL PARTS:';
                 
                 formData.additionalParts.forEach((part, index) => {
-                    formattedNote += `\n\nPART #${index + 2}:
+                    let additionalPartText = `\n\nPART #${index + 2}:
 OLD SERIAL NUMBER: ${part.oldSerialNumber || "N/A"}
 NEW SERIAL NUMBER: ${part.newSerialNumber || "N/A"}
 LICENSE PLATE: ${part.licensePlate || "N/A"}`;
+                    
+                    // Add drive location for DBD template
+                    if (currentTemplate === 'dbd' && part.driveLocation !== undefined) {
+                        additionalPartText += `\nDRIVE LOCATION: ${part.driveLocation || "N/A"}`;
+                        
+                        // Add bin number and proper discard for DBD template
+                        if (part.binNumber !== undefined) {
+                            additionalPartText += `\nBIN #: ${part.binNumber || "N/A"}`;
+                        }
+                        if (part.properDiscard !== undefined) {
+                            additionalPartText += `\nDRIVE DISCARDED IN PROPER DBD BIN: ${part.properDiscard || "N/A"}`;
+                        }
+                    }
+                    
+                    formattedNote += additionalPartText;
                 });
             }
             
@@ -791,7 +956,7 @@ LICENSE PLATE: ${part.licensePlate || "N/A"}`;
             additionalPartsCounter = 0;
             
             // Reset the add more button position
-            if (currentTemplate === 'breakfix' || currentTemplate === 'networking') {
+            if (['breakfix', 'dbd', 'networking'].includes(currentTemplate)) {
                 addAddMoreButton(templateForm);
             }
             
