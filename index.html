@@ -304,7 +304,7 @@ TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
                     { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
                     { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"] },
                     { name: "escalatedTo", label: "Who will this be escalated to?", type: "text" },
-                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text" } }
+                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text" }
                 ],
                 format: (data) => {
                     let escalationInfo = "";
@@ -455,35 +455,35 @@ We need to schedule a work window for task # ${data.taskId || "SlotA"}. The next
 NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that SS can confirm availability. Important! Please remove traffic if necessary to facilitate a timely start for the WW event.`;
                 }
             },
-            custom: {
-                title: "Custom Template",
-                fields: [
-                    { name: "customTitle", label: "Note Title", type: "text" },
-                    { name: "customTemplate", label: "Custom Template (Use ## to denote where input values will go)", type: "textarea" },
-                    { name: "customValues", label: "Values (one per line, in order of ##)", type: "textarea" }
-                ],
-                format: (data) => {
-                    let result = `${data.customTitle || "Custom Note"}\n\n`;
+            // custom: {
+            //     title: "Custom Template",
+            //     fields: [
+            //         { name: "customTitle", label: "Note Title", type: "text" },
+            //         { name: "customTemplate", label: "Custom Template (Use ## to denote where input values will go)", type: "textarea" },
+            //         { name: "customValues", label: "Values (one per line, in order of ##)", type: "textarea" }
+            //     ],
+            //     format: (data) => {
+            //         let result = `${data.customTitle || "Custom Note"}\n\n`;
                     
-                    if (data.customTemplate) {
-                        let template = data.customTemplate;
-                        const values = data.customValues ? data.customValues.split('\n').filter(v => v.trim()) : [];
+            //         if (data.customTemplate) {
+            //             let template = data.customTemplate;
+            //             const values = data.customValues ? data.customValues.split('\n').filter(v => v.trim()) : [];
                         
-                        values.forEach((value, index) => {
-                            template = template.replace('##', value);
-                        });
+            //             values.forEach((value, index) => {
+            //                 template = template.replace('##', value);
+            //             });
                         
-                        // Replace any remaining ## with blank
-                        template = template.replace(/##/g, '[empty]');
+            //             // Replace any remaining ## with blank
+            //             template = template.replace(/##/g, '[empty]');
                         
-                        result += template;
-                    } else {
-                        result += "[No custom template defined]";
-                    }
+            //             result += template;
+            //         } else {
+            //             result += "[No custom template defined]";
+            //         }
                     
-                    return result;
-                }
-            }
+            //         return result;
+            //     } 
+            // } 
         };
 
         // Current template
