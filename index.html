@@ -5,18 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Note Template Generator</title>
     <style>
+        /* Base styles - will be modified by theme */
+        :root {
+            --primary-color: #3498db;
+            --primary-hover: #2980b9;
+            --secondary-color: #27ae60;
+            --secondary-hover: #219653;
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --bg-color: #f5f7fa;
+            --card-bg: white;
+            --text-color: #333;
+            --border-color: #f0f0f0;
+            --highlight-bg: #f1f9ff;
+        }
+        
+        /* Themes */
+        body.theme-blue {
+            --primary-color: #3498db;
+            --primary-hover: #2980b9;
+            --secondary-color: #27ae60;
+            --secondary-hover: #219653;
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --bg-color: #f5f7fa;
+            --card-bg: white;
+            --text-color: #333;
+            --border-color: #f0f0f0;
+            --highlight-bg: #f1f9ff;
+        }
+        
+        body.theme-purple {
+            --primary-color: #9b59b6;
+            --primary-hover: #8e44ad;
+            --secondary-color: #27ae60;
+            --secondary-hover: #219653;
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --bg-color: #f8f5fa;
+            --card-bg: white;
+            --text-color: #333;
+            --border-color: #f0e0ff;
+            --highlight-bg: #f5e9ff;
+        }
+        
+        body.theme-green {
+            --primary-color: #2ecc71;
+            --primary-hover: #27ae60;
+            --secondary-color: #3498db;
+            --secondary-hover: #2980b9;
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --bg-color: #f5faf7;
+            --card-bg: white;
+            --text-color: #333;
+            --border-color: #e0f5e0;
+            --highlight-bg: #e9ffef;
+        }
+        
+        body.theme-dark {
+            --primary-color: #3498db;
+            --primary-hover: #2980b9;
+            --secondary-color: #2ecc71;
+            --secondary-hover: #27ae60;
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --bg-color: #2c3e50;
+            --card-bg: #34495e;
+            --text-color: #ecf0f1;
+            --border-color: #4a6278;
+            --highlight-bg: #2d4257;
+        }
+        
+        body.theme-light {
+            --primary-color: #3498db;
+            --primary-hover: #2980b9;
+            --secondary-color: #27ae60;
+            --secondary-hover: #219653;
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --bg-color: #ffffff;
+            --card-bg: #f9f9f9;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --highlight-bg: #f5f9fc;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-color);
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f7fa;
+            background-color: var(--bg-color);
+            transition: all 0.3s ease;
         }
         
         h1 {
-            color: #2c3e50;
+            color: var(--primary-color);
             text-align: center;
             margin-bottom: 30px;
         }
@@ -28,7 +115,7 @@
         }
         
         .form-section, .preview-section {
-            background-color: white;
+            background-color: var(--card-bg);
             padding: 25px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -39,9 +126,9 @@
         }
         
         h2 {
-            color: #3498db;
+            color: var(--primary-color);
             margin-top: 0;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
         }
         
@@ -49,15 +136,18 @@
             margin-bottom: 20px;
         }
         
-        .conditional-field {
+        .conditional-fields-container {
+            padding-left: 15px;
+            border-left: 3px solid var(--primary-color);
+            margin-top: 5px;
+            margin-bottom: 15px;
+            background-color: var(--highlight-bg);
             padding: 15px;
-            border-left: 3px solid #3498db;
-            background-color: #f1f9ff;
-            display: none;
+            border-radius: 0 4px 4px 0;
         }
         
         .add-more-link {
-            color: #3498db;
+            color: var(--primary-color);
             cursor: pointer;
             font-weight: 600;
             display: inline-block;
@@ -67,7 +157,7 @@
         }
         
         .delete-group-btn {
-            background-color: #e74c3c;
+            background-color: var(--danger-color);
             color: white;
             border: none;
             padding: 5px 10px;
@@ -78,11 +168,15 @@
             margin-bottom: 20px;
         }
         
+        .delete-group-btn:hover {
+            background-color: var(--danger-hover);
+        }
+        
         .additional-part-group {
-            border-left: 3px solid #3498db;
+            border-left: 3px solid var(--primary-color);
             padding-left: 15px;
             margin-bottom: 30px;
-            background-color: #f8f9fa;
+            background-color: var(--highlight-bg);
             padding: 15px;
             border-radius: 4px;
         }
@@ -91,17 +185,19 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #555;
+            color: var(--text-color);
         }
         
         input[type="text"], textarea, select {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             font-family: inherit;
             font-size: 15px;
             box-sizing: border-box;
+            background-color: var(--card-bg);
+            color: var(--text-color);
         }
         
         textarea {
@@ -110,7 +206,7 @@
         }
         
         .btn {
-            background-color: #3498db;
+            background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 12px 20px;
@@ -125,24 +221,23 @@
         }
         
         .btn:hover {
-            background-color: #2980b9;
+            background-color: var(--primary-hover);
         }
         
         .btn-copy {
-            background-color: #27ae60;
-            margin-left: 10px;
+            background-color: var(--secondary-color);
         }
         
         .btn-copy:hover {
-            background-color: #219653;
+            background-color: var(--secondary-hover);
         }
         
         .btn-reset {
-            background-color: #e74c3c;
+            background-color: var(--danger-color);
         }
         
         .btn-reset:hover {
-            background-color: #c0392b;
+            background-color: var(--danger-hover);
         }
         
         .button-group {
@@ -152,10 +247,10 @@
         }
         
         #preview {
-            background-color: #f9f9f9;
+            background-color: var(--highlight-bg);
             padding: 20px;
             border-radius: 4px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-color);
             min-height: 300px;
             white-space: pre-wrap;
             font-family: 'Courier New', monospace;
@@ -163,13 +258,14 @@
             margin-top: 15px;
             overflow-y: auto;
             line-height: 1.5;
+            color: var(--text-color);
         }
         
         .copy-message {
             position: absolute;
             top: 25px;
             right: 25px;
-            background-color: #27ae60;
+            background-color: var(--secondary-color);
             color: white;
             padding: 8px 12px;
             border-radius: 4px;
@@ -189,19 +285,55 @@
         select {
             padding: 10px;
             border-radius: 4px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             font-size: 15px;
             margin-right: 10px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        /* Theme selector */
+        .theme-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .theme-selector select {
+            padding: 8px 12px;
+            border-radius: 4px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
         }
 
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
             }
+            
+            .theme-selector {
+                position: static;
+                margin-bottom: 20px;
+                text-align: right;
+            }
         }
     </style>
 </head>
-<body>
+<body class="theme-blue">
+    <!-- Theme selector -->
+    <div class="theme-selector">
+        <select id="theme-select">
+            <option value="blue">Blue Theme</option>
+            <option value="purple">Light Purple</option>
+            <option value="green">Light Green</option>
+            <option value="dark">Dark Mode</option>
+            <option value="light">Light Mode</option>
+        </select>
+    </div>
+
     <h1>Note Template Generator</h1>
     
     <div class="container">
@@ -217,7 +349,7 @@
                     <option value="meeting">Meeting Note</option>
                     <option value="project">Project Update</option>
                     <option value="workwindow">Work Window Request Email</option>
-                    <!-- <option value="custom">Custom Template</option> -->
+                    <option value="custom">Custom Template</option>
                 </select>
             </div>
             
@@ -230,7 +362,6 @@
             <h2>Note Preview</h2>
             <div id="preview">Your compiled note will appear here...</div>
             <div class="button-group">
-                <!-- <button type="button" class="btn" id="complete-btn">Complete Note</button> -->
                 <button type="button" class="btn btn-copy" id="copy-btn">Copy to Clipboard</button>
                 <button type="button" class="btn btn-reset" id="reset-btn">Reset</button>
             </div>
@@ -246,21 +377,19 @@
                 fields: [
                     { name: "taskId", label: "Task ID", type: "text" },
                     { name: "assetTagConfirmed", label: "Was the asset tag visually confirmed?", type: "select", options: ["Yes", "No"] },
-                    { name: "taskReviewed", label: "Did you review the task?", type: "select", options: ["Yes", "No"] },
-                    { name: "notesReviewed", label: "Did you review the notes?", type: "select", options: ["Yes", "No"] },
                     { name: "uponArrival", label: "Upon Arrival:", type: "textarea" },
                     { name: "partReplaced", label: "Part(s) Replaced", type: "text" },
                     { name: "oldSerialNumber", label: "Old Serial Number", type: "text" },
                     { name: "newSerialNumber", label: "New Serial Number", type: "text" },
                     { name: "licensePlate", label: "License Plate", type: "text" },
                     { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
-                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"] },
-                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text" },
-                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text" }
+                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "checkbox", hasConditionalFields: true },
+                    { name: "escalatedTo", label: "Who was it escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } },
+                    { name: "seniorTechAlias", label: "Alias of the senior who approved this:", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } }
                 ],
                 format: (data) => {
                     let escalationInfo = "";
-                    if (data.wasEscalated === "Yes") {
+                    if (data.wasEscalated === "checked") {
                         escalationInfo = `
 ESCALATION DETAILS:
 - Escalated To: ${data.escalatedTo || "[Not specified]"}
@@ -269,8 +398,6 @@ ESCALATION DETAILS:
                     
                     return `TASK ID: ${data.taskId || "[No ID]"}
 ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
-TASK REVIEWED: ${data.taskReviewed || "N/A"}
-NOTES REVIEWED: ${data.notesReviewed || "N/A"}
 
 UPON ARRIVAL:
 ${data.uponArrival || "[No arrival notes recorded]"}
@@ -283,7 +410,7 @@ LICENSE PLATE: ${data.licensePlate || "N/A"}
 ACTIONS TAKEN:
 ${data.actionsTaken || "[No actions recorded]"}
 
-TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
+TICKET ESCALATED: ${data.wasEscalated === "checked" ? "Yes" : "No"}${escalationInfo}`;
                 }
             },
             dbd: {
@@ -291,8 +418,6 @@ TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
                 fields: [
                     { name: "taskId", label: "Task ID", type: "text" },
                     { name: "assetTagConfirmed", label: "Was the asset tag visually confirmed?", type: "select", options: ["Yes", "No"] },
-                    { name: "taskReviewed", label: "Did you review the task?", type: "select", options: ["Yes", "No"] },
-                    { name: "notesReviewed", label: "Did you review the notes?", type: "select", options: ["Yes", "No"] },
                     { name: "uponArrival", label: "Upon Arrival:", type: "textarea" },
                     { name: "partReplaced", label: "Part(s) Replaced", type: "text" },
                     { name: "oldSerialNumber", label: "Old Serial Number", type: "text" },
@@ -302,13 +427,13 @@ TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
                     { name: "binNumber", label: "Bin #", type: "text" },
                     { name: "properDiscard", label: "Was the drive discarded in the proper DBD bin?", type: "select", options: ["Yes", "No"] },
                     { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
-                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"] },
-                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text" },
-                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text" }
+                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "checkbox", hasConditionalFields: true },
+                    { name: "escalatedTo", label: "Who was it escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } },
+                    { name: "seniorTechAlias", label: "Alias of the senior who approved this:", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } }
                 ],
                 format: (data) => {
                     let escalationInfo = "";
-                    if (data.wasEscalated === "Yes") {
+                    if (data.wasEscalated === "checked") {
                         escalationInfo = `
 ESCALATION DETAILS:
 - Escalated To: ${data.escalatedTo || "[Not specified]"}
@@ -317,8 +442,6 @@ ESCALATION DETAILS:
                     
                     return `TASK ID: ${data.taskId || "[No ID]"}
 ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
-TASK REVIEWED: ${data.taskReviewed || "N/A"}
-NOTES REVIEWED: ${data.notesReviewed || "N/A"}
 
 UPON ARRIVAL:
 ${data.uponArrival || "[No arrival notes recorded]"}
@@ -334,7 +457,7 @@ DRIVE DISCARDED IN PROPER DBD BIN: ${data.properDiscard || "N/A"}
 ACTIONS TAKEN:
 ${data.actionsTaken || "[No actions recorded]"}
 
-TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
+TICKET ESCALATED: ${data.wasEscalated === "checked" ? "Yes" : "No"}${escalationInfo}`;
                 }
             },
             networking: {
@@ -342,8 +465,6 @@ TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
                 fields: [
                     { name: "taskId", label: "Task ID", type: "text" },
                     { name: "assetTagConfirmed", label: "Was the asset tag visually confirmed?", type: "select", options: ["Yes", "No"] },
-                    { name: "taskReviewed", label: "Did you review the task?", type: "select", options: ["Yes", "No"] },
-                    { name: "notesReviewed", label: "Did you review the notes?", type: "select", options: ["Yes", "No"] },
                     { name: "uponArrival", label: "Upon Arrival:", type: "textarea" },
                     { name: "sourceDevice", label: "Source Device:Port", type: "text" },
                     { name: "endDevice", label: "End Device:Port", type: "text" },
@@ -352,13 +473,13 @@ TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
                     { name: "newSerialNumber", label: "New Serial Number", type: "text" },
                     { name: "licensePlate", label: "License Plate", type: "text" },
                     { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
-                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"] },
-                    { name: "escalatedTo", label: "Who will this be escalated to?", type: "text" },
-                    { name: "seniorTechAlias", label: "Senior Technician Alias who approved escalation", type: "text" }
+                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"], hasConditionalFields: true },
+                    { name: "escalatedTo", label: "Who was this escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "Yes" } },
+                    { name: "seniorTechAlias", label: "Alias of Senior that approved the escalation:", type: "text", conditionalOn: { field: "wasEscalated", value: "Yes" } }
                 ],
                 format: (data) => {
                     let escalationInfo = "";
-                    if (data.wasEscalated === "Yes") {
+                    if (data.wasEscalated === "checked") {
                         escalationInfo = `
 ESCALATION DETAILS:
 - Escalated To: ${data.escalatedTo || "[Not specified]"}
@@ -367,8 +488,6 @@ ESCALATION DETAILS:
                     
                     return `TASK ID: ${data.taskId || "[No ID]"}
 ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
-TASK REVIEWED: ${data.taskReviewed || "N/A"}
-NOTES REVIEWED: ${data.notesReviewed || "N/A"}
 
 UPON ARRIVAL:
 ${data.uponArrival || "[No arrival notes recorded]"}
@@ -383,7 +502,7 @@ LICENSE PLATE: ${data.licensePlate || "N/A"}
 ACTIONS TAKEN:
 ${data.actionsTaken || "[No actions recorded]"}
 
-TICKET ESCALATED: ${data.wasEscalated || "No"}${escalationInfo}`;
+TICKET ESCALATED: ${data.wasEscalated === "checked" ? "Yes" : "No"}${escalationInfo}`;
                 }
             },
             meeting: {
@@ -455,38 +574,38 @@ We need to schedule a work window for task # ${data.taskId || "SlotA"}. The next
 NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that SS can confirm availability. Important! Please remove traffic if necessary to facilitate a timely start for the WW event.`;
                 }
             },
-            // custom: {
-            //     title: "Custom Template",
-            //     fields: [
-            //         { name: "customTitle", label: "Note Title", type: "text" },
-            //         { name: "customTemplate", label: "Custom Template (Use ## to denote where input values will go)", type: "textarea" },
-            //         { name: "customValues", label: "Values (one per line, in order of ##)", type: "textarea" }
-            //     ],
-            //     format: (data) => {
-            //         let result = `${data.customTitle || "Custom Note"}\n\n`;
+            custom: {
+                title: "Custom Template",
+                fields: [
+                    { name: "customTitle", label: "Note Title", type: "text" },
+                    { name: "customTemplate", label: "Custom Template (Use ## to denote where input values will go)", type: "textarea" },
+                    { name: "customValues", label: "Values (one per line, in order of ##)", type: "textarea" }
+                ],
+                format: (data) => {
+                    let result = `${data.customTitle || "Custom Note"}\n\n`;
                     
-            //         if (data.customTemplate) {
-            //             let template = data.customTemplate;
-            //             const values = data.customValues ? data.customValues.split('\n').filter(v => v.trim()) : [];
+                    if (data.customTemplate) {
+                        let template = data.customTemplate;
+                        const values = data.customValues ? data.customValues.split('\n').filter(v => v.trim()) : [];
                         
-            //             values.forEach((value, index) => {
-            //                 template = template.replace('##', value);
-            //             });
+                        values.forEach(value => {
+                            template = template.replace('##', value);
+                        });
                         
-            //             // Replace any remaining ## with blank
-            //             template = template.replace(/##/g, '[empty]');
+                        // Replace any remaining ## with blank
+                        template = template.replace(/##/g, '[empty]');
                         
-            //             result += template;
-            //         } else {
-            //             result += "[No custom template defined]";
-            //         }
+                        result += template;
+                    } else {
+                        result += "[No custom template defined]";
+                    }
                     
-            //         return result;
-            //     } 
-            // } 
+                    return result;
+                }
+            }
         };
 
-        // Current template
+        // Current template and parts counter
         let currentTemplate = 'breakfix';
         let additionalPartsCounter = 0;
         
@@ -494,7 +613,6 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
         const templateForm = document.getElementById('template-form');
         const previewDiv = document.getElementById('preview');
         const templateSelect = document.getElementById('template-select');
-        const completeBtn = document.getElementById('complete-btn');
         const copyBtn = document.getElementById('copy-btn');
         const resetBtn = document.getElementById('reset-btn');
         const copyMessage = document.getElementById('copy-message');
@@ -502,8 +620,35 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
         // Initialize with the default template
         generateFormFields();
         
-        // Add change event listener to the template select
+        // Add event listeners
         templateSelect.addEventListener('change', changeTemplate);
+        copyBtn.addEventListener('click', copyToClipboard);
+        resetBtn.addEventListener('click', resetForm);
+        
+        // Theme selector event listener
+        const themeSelect = document.getElementById('theme-select');
+        themeSelect.addEventListener('change', function() {
+            const selectedTheme = this.value;
+            setTheme(selectedTheme);
+        });
+        
+        // Function to set the theme
+        function setTheme(theme) {
+            // Remove all theme classes
+            document.body.classList.remove('theme-blue', 'theme-purple', 'theme-green', 'theme-dark', 'theme-light');
+            // Add the selected theme class
+            document.body.classList.add(`theme-${theme}`);
+            
+            // Save the theme preference to localStorage
+            localStorage.setItem('preferredTheme', theme);
+        }
+        
+        // Load saved theme preference if it exists
+        const savedTheme = localStorage.getItem('preferredTheme');
+        if (savedTheme) {
+            themeSelect.value = savedTheme;
+            setTheme(savedTheme);
+        }
         
         // Function to change template
         function changeTemplate() {
@@ -519,24 +664,21 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             
             const template = templates[currentTemplate];
             
-            template.fields.forEach((field, index) => {
-                // Skip conditional fields initially
-                if (field.conditionalOn && !shouldShowConditionalField(field)) {
+            // First pass: Create all regular fields (non-conditional)
+            template.fields.forEach(field => {
+                // Skip conditional fields - we'll add them after their parent field
+                if (field.conditionalOn) {
                     return;
                 }
                 
                 const formGroup = document.createElement('div');
                 formGroup.className = 'form-group';
-                if (field.conditionalOn) {
-                    formGroup.className += ' conditional-field';
-                    formGroup.setAttribute('data-depends-on', field.conditionalOn.field);
-                    formGroup.setAttribute('data-depends-value', field.conditionalOn.value);
-                }
                 
                 const label = document.createElement('label');
                 label.setAttribute('for', field.name);
                 label.textContent = field.label;
                 
+                // Create the input based on field type
                 let input;
                 if (field.type === 'textarea') {
                     input = document.createElement('textarea');
@@ -555,11 +697,11 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                         option.textContent = optionText;
                         input.appendChild(option);
                     });
-                    
-                    // For fields that trigger conditional fields
-                    if (field.hasConditionalFields) {
-                        input.addEventListener('change', handleConditionalFields);
-                    }
+                } else if (field.type === 'checkbox') {
+                    input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.style.marginLeft = '0';
+                    input.style.marginTop = '10px';
                 } else {
                     input = document.createElement('input');
                     input.type = field.type;
@@ -567,36 +709,115 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                 
                 input.id = field.name;
                 input.name = field.name;
-                input.addEventListener('input', updatePreview);
+                
+                // Add event listeners
+                if (field.type === 'checkbox' && field.hasConditionalFields) {
+                    input.addEventListener('change', function() {
+                        updateConditionalFieldsVisibility(this);
+                        updatePreview();
+                    });
+                } else if (field.type === 'select' && field.hasConditionalFields) {
+                    input.addEventListener('change', handleConditionalFields);
+                } else {
+                    input.addEventListener('input', updatePreview);
+                }
                 
                 formGroup.appendChild(label);
                 formGroup.appendChild(input);
                 templateForm.appendChild(formGroup);
                 
-                // Create container for additional parts after the License Plate field
+                // If this field has conditional fields, add them right after it
+                if (field.hasConditionalFields) {
+                    // Find all conditional fields that depend on this field
+                    const conditionalFields = template.fields.filter(f => 
+                        f.conditionalOn && f.conditionalOn.field === field.name
+                    );
+                    
+                    // Create a container for the conditional fields
+                    const conditionalContainer = document.createElement('div');
+                    conditionalContainer.id = `conditional-container-${field.name}`;
+                    conditionalContainer.className = 'conditional-fields-container';
+                    conditionalContainer.style.display = 'none';
+                    conditionalContainer.style.paddingLeft = '15px';
+                    conditionalContainer.style.borderLeft = '3px solid #3498db';
+                    conditionalContainer.style.marginTop = '5px';
+                    conditionalContainer.style.marginBottom = '15px';
+                    conditionalContainer.style.backgroundColor = '#f1f9ff';
+                    conditionalContainer.style.padding = '15px';
+                    
+                    // Add each conditional field to the container
+                    conditionalFields.forEach(condField => {
+                        const condFormGroup = document.createElement('div');
+                        condFormGroup.className = 'form-group';
+                        
+                        const condLabel = document.createElement('label');
+                        condLabel.setAttribute('for', condField.name);
+                        condLabel.textContent = condField.label;
+                        
+                        let condInput;
+                        if (condField.type === 'textarea') {
+                            condInput = document.createElement('textarea');
+                        } else {
+                            condInput = document.createElement('input');
+                            condInput.type = condField.type;
+                        }
+                        
+                        condInput.id = condField.name;
+                        condInput.name = condField.name;
+                        condInput.addEventListener('input', updatePreview);
+                        
+                        condFormGroup.appendChild(condLabel);
+                        condFormGroup.appendChild(condInput);
+                        conditionalContainer.appendChild(condFormGroup);
+                    });
+                    
+                    // Add the conditional container after the parent field
+                    templateForm.appendChild(conditionalContainer);
+                    
+                    // Check initial state (for when the form is reset but the triggering field is set)
+                    if ((field.type === 'checkbox' && input.checked) || 
+                        (field.type === 'select' && input.value === conditionalFields[0].conditionalOn.value)) {
+                        conditionalContainer.style.display = 'block';
+                    }
+                }
+                
+                // Create container for additional parts after the appropriate field
                 if ((field.name === 'licensePlate' && currentTemplate === 'breakfix') ||
                     (field.name === 'properDiscard' && currentTemplate === 'dbd') ||
                     (field.name === 'licensePlate' && currentTemplate === 'networking')) {
-                    // Add container for additional parts
+                    
                     const additionalPartsContainer = document.createElement('div');
                     additionalPartsContainer.id = 'additional-parts-container';
                     templateForm.appendChild(additionalPartsContainer);
                     
-                    // Add the "Add More Parts" link initially after the main part fields
+                    // Add the "Add More Parts" link
                     addAddMoreButton(templateForm);
                 }
             });
         }
         
+        // Function to update visibility of conditional fields based on checkbox state
+        function updateConditionalFieldsVisibility(checkbox) {
+            const container = document.getElementById(`conditional-container-${checkbox.id}`);
+            if (container) {
+                if (checkbox.checked) {
+                    container.style.display = 'block';
+                } else {
+                    container.style.display = 'none';
+                    // Clear all input fields in the container
+                    const inputs = container.querySelectorAll('input, textarea, select');
+                    inputs.forEach(input => input.value = '');
+                }
+            }
+        }
+        
         // Function to add the "Add More Parts" button
         function addAddMoreButton(parentElement) {
-            // Remove any existing add more button first
             const existingButton = document.getElementById('add-more-container');
             if (existingButton) {
                 existingButton.remove();
             }
             
-            // Create a new add more button
             const addMoreContainer = document.createElement('div');
             addMoreContainer.id = 'add-more-container';
             
@@ -614,7 +835,14 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             if (!field.conditionalOn) return true;
             
             const dependsOnField = document.getElementById(field.conditionalOn.field);
-            return dependsOnField && dependsOnField.value === field.conditionalOn.value;
+            if (!dependsOnField) return false;
+            
+            // For checkbox dependency
+            if (dependsOnField.type === 'checkbox') {
+                return (field.conditionalOn.value === "checked" && dependsOnField.checked);
+            }
+            // For select or other field types
+            return dependsOnField.value === field.conditionalOn.value;
         }
         
         // Function to handle showing/hiding conditional fields
@@ -631,13 +859,10 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     field.style.display = 'none';
                     // Clear values in hidden fields
                     const inputs = field.querySelectorAll('input, textarea, select');
-                    inputs.forEach(input => {
-                        input.value = '';
-                    });
+                    inputs.forEach(input => input.value = '');
                 }
             });
             
-            // Update preview after handling conditional fields
             updatePreview();
         }
         
@@ -650,104 +875,23 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             partGroup.className = 'additional-part-group';
             partGroup.id = `additional-part-${additionalPartsCounter}`;
             
-            // Create a heading for the additional part
+            // Create a heading
             const heading = document.createElement('h4');
             heading.textContent = `Additional Part ${additionalPartsCounter}`;
             heading.style.marginTop = '0';
             partGroup.appendChild(heading);
             
-            // Create Old Serial Number field
-            const oldSerialGroup = document.createElement('div');
-            oldSerialGroup.className = 'form-group';
+            // Create common fields for all templates
+            createFormField(partGroup, 'Old Serial Number', `oldSerialNumber${additionalPartsCounter}`, 'text');
+            createFormField(partGroup, 'New Serial Number', `newSerialNumber${additionalPartsCounter}`, 'text');
+            createFormField(partGroup, 'License Plate', `licensePlate${additionalPartsCounter}`, 'text');
             
-            const oldSerialLabel = document.createElement('label');
-            oldSerialLabel.setAttribute('for', `oldSerialNumber${additionalPartsCounter}`);
-            oldSerialLabel.textContent = 'Old Serial Number';
-            
-            const oldSerialInput = document.createElement('input');
-            oldSerialInput.type = 'text';
-            oldSerialInput.id = `oldSerialNumber${additionalPartsCounter}`;
-            oldSerialInput.name = `oldSerialNumber${additionalPartsCounter}`;
-            oldSerialInput.addEventListener('input', updatePreview);
-            
-            oldSerialGroup.appendChild(oldSerialLabel);
-            oldSerialGroup.appendChild(oldSerialInput);
-            partGroup.appendChild(oldSerialGroup);
-            
-            // Create New Serial Number field
-            const newSerialGroup = document.createElement('div');
-            newSerialGroup.className = 'form-group';
-            
-            const newSerialLabel = document.createElement('label');
-            newSerialLabel.setAttribute('for', `newSerialNumber${additionalPartsCounter}`);
-            newSerialLabel.textContent = 'New Serial Number';
-            
-            const newSerialInput = document.createElement('input');
-            newSerialInput.type = 'text';
-            newSerialInput.id = `newSerialNumber${additionalPartsCounter}`;
-            newSerialInput.name = `newSerialNumber${additionalPartsCounter}`;
-            newSerialInput.addEventListener('input', updatePreview);
-            
-            newSerialGroup.appendChild(newSerialLabel);
-            newSerialGroup.appendChild(newSerialInput);
-            partGroup.appendChild(newSerialGroup);
-            
-            // Create License Plate field
-            const licensePlateGroup = document.createElement('div');
-            licensePlateGroup.className = 'form-group';
-            
-            const licensePlateLabel = document.createElement('label');
-            licensePlateLabel.setAttribute('for', `licensePlate${additionalPartsCounter}`);
-            licensePlateLabel.textContent = 'License Plate';
-            
-            const licensePlateInput = document.createElement('input');
-            licensePlateInput.type = 'text';
-            licensePlateInput.id = `licensePlate${additionalPartsCounter}`;
-            licensePlateInput.name = `licensePlate${additionalPartsCounter}`;
-            licensePlateInput.addEventListener('input', updatePreview);
-            
-            licensePlateGroup.appendChild(licensePlateLabel);
-            licensePlateGroup.appendChild(licensePlateInput);
-            partGroup.appendChild(licensePlateGroup);
-            
-            // Create Drive Location field for DBD template
+            // Add DBD-specific fields
             if (currentTemplate === 'dbd') {
-                const driveLocationGroup = document.createElement('div');
-                driveLocationGroup.className = 'form-group';
+                createFormField(partGroup, 'Location of drive being replaced', `driveLocation${additionalPartsCounter}`, 'text');
+                createFormField(partGroup, 'Bin #', `binNumber${additionalPartsCounter}`, 'text');
                 
-                const driveLocationLabel = document.createElement('label');
-                driveLocationLabel.setAttribute('for', `driveLocation${additionalPartsCounter}`);
-                driveLocationLabel.textContent = 'Location of drive being replaced';
-                
-                const driveLocationInput = document.createElement('input');
-                driveLocationInput.type = 'text';
-                driveLocationInput.id = `driveLocation${additionalPartsCounter}`;
-                driveLocationInput.name = `driveLocation${additionalPartsCounter}`;
-                driveLocationInput.addEventListener('input', updatePreview);
-                
-                driveLocationGroup.appendChild(driveLocationLabel);
-                driveLocationGroup.appendChild(driveLocationInput);
-                partGroup.appendChild(driveLocationGroup);
-                
-                // Create Bin # field for DBD template
-                const binNumberGroup = document.createElement('div');
-                binNumberGroup.className = 'form-group';
-                
-                const binNumberLabel = document.createElement('label');
-                binNumberLabel.setAttribute('for', `binNumber${additionalPartsCounter}`);
-                binNumberLabel.textContent = 'Bin #';
-                
-                const binNumberInput = document.createElement('input');
-                binNumberInput.type = 'text';
-                binNumberInput.id = `binNumber${additionalPartsCounter}`;
-                binNumberInput.name = `binNumber${additionalPartsCounter}`;
-                binNumberInput.addEventListener('input', updatePreview);
-                
-                binNumberGroup.appendChild(binNumberLabel);
-                binNumberGroup.appendChild(binNumberInput);
-                partGroup.appendChild(binNumberGroup);
-                
-                // Create Proper Discard field for DBD template
+                // Add select field for proper discard
                 const properDiscardGroup = document.createElement('div');
                 properDiscardGroup.className = 'form-group';
                 
@@ -759,13 +903,12 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                 properDiscardInput.id = `properDiscard${additionalPartsCounter}`;
                 properDiscardInput.name = `properDiscard${additionalPartsCounter}`;
                 
-                // Add empty option
+                // Add options
                 const emptyOption = document.createElement('option');
                 emptyOption.value = '';
                 emptyOption.textContent = '-- Select --';
                 properDiscardInput.appendChild(emptyOption);
                 
-                // Add Yes/No options
                 ["Yes", "No"].forEach(optionText => {
                     const option = document.createElement('option');
                     option.value = optionText;
@@ -780,18 +923,14 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                 partGroup.appendChild(properDiscardGroup);
             }
             
-            // Add Delete button with unique ID for better targeting
+            // Add Delete button
             const deleteButton = document.createElement('button');
             deleteButton.className = 'delete-group-btn';
             deleteButton.textContent = 'Delete this part';
-            deleteButton.id = `delete-part-${additionalPartsCounter}`;
-            deleteButton.setAttribute('type', 'button'); // Prevent form submission
+            deleteButton.setAttribute('type', 'button');
             deleteButton.setAttribute('data-part-id', additionalPartsCounter);
-            
-            // Add click event with proper context
             deleteButton.onclick = function() {
-                const partId = this.getAttribute('data-part-id');
-                deletePartGroup(partId);
+                deletePartGroup(this.getAttribute('data-part-id'));
             };
             
             partGroup.appendChild(deleteButton);
@@ -799,23 +938,39 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             
             updatePreview();
             
-            // Move the Add More button after the most recently added part
+            // Move the Add More button
             addAddMoreButton(container);
+        }
+        
+        // Helper function to create form fields
+        function createFormField(parent, labelText, fieldId, fieldType) {
+            const group = document.createElement('div');
+            group.className = 'form-group';
+            
+            const label = document.createElement('label');
+            label.setAttribute('for', fieldId);
+            label.textContent = labelText;
+            
+            const input = document.createElement('input');
+            input.type = fieldType;
+            input.id = fieldId;
+            input.name = fieldId;
+            input.addEventListener('input', updatePreview);
+            
+            group.appendChild(label);
+            group.appendChild(input);
+            parent.appendChild(group);
         }
         
         // Function to delete a part group
         function deletePartGroup(partId) {
-            // Convert partId to string if it's not already
             partId = String(partId);
             
             const partGroup = document.getElementById(`additional-part-${partId}`);
             if (partGroup) {
-                // Remove the part group from the DOM
                 partGroup.remove();
                 updatePreview();
                 
-                // Reposition the Add More button after the last part
-                // or after the main form if no additional parts remain
                 const container = document.getElementById('additional-parts-container');
                 const parts = container.querySelectorAll('.additional-part-group');
                 
@@ -824,8 +979,6 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                 } else {
                     addAddMoreButton(templateForm);
                 }
-            } else {
-                console.error(`Could not find element with ID additional-part-${partId}`);
             }
         }
         
@@ -838,7 +991,12 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             template.fields.forEach(field => {
                 const input = document.getElementById(field.name);
                 if (input) {
-                    formData[field.name] = input.value;
+                    // Handle checkbox values differently
+                    if (field.type === 'checkbox') {
+                        formData[field.name] = input.checked ? "checked" : "";
+                    } else {
+                        formData[field.name] = input.value;
+                    }
                 }
             });
             
@@ -862,21 +1020,15 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                                 licensePlate: licensePlate.value
                             };
                             
-                            // Add drive location, bin number and proper discard for DBD template
+                            // Add DBD-specific fields
                             if (currentTemplate === 'dbd') {
                                 const driveLocation = document.getElementById(`driveLocation${i}`);
                                 const binNumber = document.getElementById(`binNumber${i}`);
                                 const properDiscard = document.getElementById(`properDiscard${i}`);
                                 
-                                if (driveLocation) {
-                                    partData.driveLocation = driveLocation.value;
-                                }
-                                if (binNumber) {
-                                    partData.binNumber = binNumber.value;
-                                }
-                                if (properDiscard) {
-                                    partData.properDiscard = properDiscard.value;
-                                }
+                                if (driveLocation) partData.driveLocation = driveLocation.value;
+                                if (binNumber) partData.binNumber = binNumber.value;
+                                if (properDiscard) partData.properDiscard = properDiscard.value;
                             }
                             
                             formData.additionalParts.push(partData);
@@ -885,7 +1037,7 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                 }
             }
             
-            // Format the note with additional parts
+            // Format the note
             let formattedNote = template.format(formData);
             
             // Add additional parts info to the formatted note
@@ -901,11 +1053,11 @@ OLD SERIAL NUMBER: ${part.oldSerialNumber || "N/A"}
 NEW SERIAL NUMBER: ${part.newSerialNumber || "N/A"}
 LICENSE PLATE: ${part.licensePlate || "N/A"}`;
                     
-                    // Add drive location for DBD template
-                    if (currentTemplate === 'dbd' && part.driveLocation !== undefined) {
-                        additionalPartText += `\nDRIVE LOCATION: ${part.driveLocation || "N/A"}`;
-                        
-                        // Add bin number and proper discard for DBD template
+                    // Add DBD-specific fields
+                    if (currentTemplate === 'dbd') {
+                        if (part.driveLocation !== undefined) {
+                            additionalPartText += `\nDRIVE LOCATION: ${part.driveLocation || "N/A"}`;
+                        }
                         if (part.binNumber !== undefined) {
                             additionalPartText += `\nBIN #: ${part.binNumber || "N/A"}`;
                         }
@@ -921,47 +1073,85 @@ LICENSE PLATE: ${part.licensePlate || "N/A"}`;
             previewDiv.textContent = formattedNote;
         }
         
-        // Complete button click handler
-        completeBtn.addEventListener('click', () => {
-            updatePreview(); // Ensure preview is current
-            previewDiv.focus();
-        });
-        
-        // Copy button click handler
-        copyBtn.addEventListener('click', () => {
+        // Function to copy to clipboard
+        function copyToClipboard() {
             const noteText = previewDiv.textContent;
-            navigator.clipboard.writeText(noteText).then(() => {
-                copyMessage.classList.add('show');
-                setTimeout(() => {
-                    copyMessage.classList.remove('show');
-                }, 2000);
-            });
-        });
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(noteText)
+                    .then(() => showCopyMessage())
+                    .catch(() => fallbackCopyTextToClipboard(noteText));
+            } else {
+                fallbackCopyTextToClipboard(noteText);
+            }
+        }
         
-        // Reset button click handler
-        resetBtn.addEventListener('click', () => {
+        // Show copy success message
+        function showCopyMessage() {
+            copyMessage.classList.add('show');
+            setTimeout(() => {
+                copyMessage.classList.remove('show');
+            }, 2000);
+        }
+        
+        // Fallback copy function for older browsers
+        function fallbackCopyTextToClipboard(text) {
+            try {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                
+                // Position offscreen
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                document.body.appendChild(textArea);
+                
+                textArea.focus();
+                textArea.select();
+                
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (successful) {
+                    showCopyMessage();
+                } else {
+                    console.error('Fallback: Could not copy text');
+                    alert('Could not copy text. Please select the text manually.');
+                }
+            } catch (err) {
+                console.error('Fallback: Could not copy text', err);
+                alert('Could not copy text. Please select the text manually.');
+            }
+        }
+        
+        // Reset form function
+        function resetForm() {
             templateForm.reset();
             
-            // Also reset any conditional fields
-            const conditionalFields = document.querySelectorAll('.conditional-field');
-            conditionalFields.forEach(field => {
-                field.style.display = 'none';
+            // Reset conditional field containers
+            document.querySelectorAll('.conditional-fields-container').forEach(container => {
+                container.style.display = 'none';
             });
             
-            // Remove any additional parts
+            // Reset checkboxes (they might not be properly reset by the form.reset())
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Remove additional parts
             const additionalPartsContainer = document.getElementById('additional-parts-container');
             if (additionalPartsContainer) {
                 additionalPartsContainer.innerHTML = '';
             }
             additionalPartsCounter = 0;
             
-            // Reset the add more button position
+            // Reset add more button position
             if (['breakfix', 'dbd', 'networking'].includes(currentTemplate)) {
                 addAddMoreButton(templateForm);
             }
             
             updatePreview();
-        });
+        }
     </script>
 </body>
 </html>
