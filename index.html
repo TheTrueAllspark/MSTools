@@ -75,6 +75,7 @@
             --text-color: #ecf0f1;
             --border-color: #4a6278;
             --highlight-bg: #2d4257;
+            --conditional-text-color: #333; /* Special text color for conditional containers in dark mode */
         }
         
         body.theme-light {
@@ -144,6 +145,24 @@
             background-color: var(--highlight-bg);
             padding: 15px;
             border-radius: 0 4px 4px 0;
+        }
+        
+        /* Special styling for dark mode conditional fields */
+        body.theme-dark .conditional-fields-container {
+            background-color: #a8c9e6; /* Light blue background for better contrast */
+            border-color: #3498db;
+        }
+        
+        body.theme-dark .conditional-fields-container label,
+        body.theme-dark .conditional-fields-container input,
+        body.theme-dark .conditional-fields-container textarea {
+            color: #333; /* Dark text for better readability on light background */
+        }
+        
+        body.theme-dark .conditional-fields-container input,
+        body.theme-dark .conditional-fields-container textarea {
+            background-color: #ffffff;
+            border-color: #ccc;
         }
         
         .add-more-link {
