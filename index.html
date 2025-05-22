@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Note Template Generator</title>
     <style>
-        /* Base styles - will be modified by theme */
+        /* Base styles and CSS variables */
         :root {
             --primary-color: #3498db;
             --primary-hover: #2980b9;
@@ -20,7 +20,7 @@
             --highlight-bg: #f1f9ff;
         }
         
-        /* Themes */
+        /* Theme definitions */
         body.theme-blue {
             --primary-color: #3498db;
             --primary-hover: #2980b9;
@@ -75,7 +75,34 @@
             --text-color: #ecf0f1;
             --border-color: #4a6278;
             --highlight-bg: #2d4257;
-            --conditional-text-color: #333; /* Special text color for conditional containers in dark mode */
+        }
+        
+        body.theme-dark-purple {
+            --primary-color: #9b59b6;
+            --primary-hover: #8e44ad;
+            --secondary-color: #2ecc71;
+            --secondary-hover: #27ae60;
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --bg-color: #2a2040;
+            --card-bg: #382952;
+            --text-color: #ecf0f1;
+            --border-color: #4a3668;
+            --highlight-bg: #33294d;
+        }
+        
+        body.theme-dark-green {
+            --primary-color: #2ecc71;
+            --primary-hover: #27ae60;
+            --secondary-color: #3498db;
+            --secondary-hover: #2980b9;
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --bg-color: #1e352d;
+            --card-bg: #2d4a3e;
+            --text-color: #ecf0f1;
+            --border-color: #355a4c;
+            --highlight-bg: #2a4439;
         }
         
         body.theme-light {
@@ -92,6 +119,7 @@
             --highlight-bg: #f5f9fc;
         }
         
+        /* Base styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -109,13 +137,22 @@
             margin-bottom: 30px;
         }
         
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        /* Layout containers */
         .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
         
-        .form-section, .preview-section {
+        .form-section, 
+        .preview-section {
             background-color: var(--card-bg);
             padding: 25px;
             border-radius: 8px;
@@ -126,78 +163,9 @@
             position: relative;
         }
         
-        h2 {
-            color: var(--primary-color);
-            margin-top: 0;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-        
+        /* Form elements */
         .form-group {
             margin-bottom: 20px;
-        }
-        
-        .conditional-fields-container {
-            padding-left: 15px;
-            border-left: 3px solid var(--primary-color);
-            margin-top: 5px;
-            margin-bottom: 15px;
-            background-color: var(--highlight-bg);
-            padding: 15px;
-            border-radius: 0 4px 4px 0;
-        }
-        
-        /* Special styling for dark mode conditional fields */
-        body.theme-dark .conditional-fields-container {
-            background-color: #a8c9e6; /* Light blue background for better contrast */
-            border-color: #3498db;
-        }
-        
-        body.theme-dark .conditional-fields-container label,
-        body.theme-dark .conditional-fields-container input,
-        body.theme-dark .conditional-fields-container textarea {
-            color: #333; /* Dark text for better readability on light background */
-        }
-        
-        body.theme-dark .conditional-fields-container input,
-        body.theme-dark .conditional-fields-container textarea {
-            background-color: #ffffff;
-            border-color: #ccc;
-        }
-        
-        .add-more-link {
-            color: var(--primary-color);
-            cursor: pointer;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            text-decoration: underline;
-        }
-        
-        .delete-group-btn {
-            background-color: var(--danger-color);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            font-size: 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .delete-group-btn:hover {
-            background-color: var(--danger-hover);
-        }
-        
-        .additional-part-group {
-            border-left: 3px solid var(--primary-color);
-            padding-left: 15px;
-            margin-bottom: 30px;
-            background-color: var(--highlight-bg);
-            padding: 15px;
-            border-radius: 4px;
         }
         
         label {
@@ -207,7 +175,9 @@
             color: var(--text-color);
         }
         
-        input[type="text"], textarea, select {
+        input[type="text"], 
+        textarea, 
+        select {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border-color);
@@ -224,6 +194,17 @@
             resize: vertical;
         }
         
+        select {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            font-size: 15px;
+            margin-right: 10px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        /* Buttons */
         .btn {
             background-color: var(--primary-color);
             color: white;
@@ -265,6 +246,92 @@
             gap: 10px;
         }
         
+        /* Conditional fields */
+        .conditional-fields-container {
+            padding: 15px;
+            border-left: 3px solid var(--primary-color);
+            margin-top: 5px;
+            margin-bottom: 15px;
+            background-color: var(--highlight-bg);
+            border-radius: 0 4px 4px 0;
+        }
+        
+        /* Special styling for dark mode conditional fields */
+        body.theme-dark .conditional-fields-container,
+        body.theme-dark-purple .conditional-fields-container,
+        body.theme-dark-green .conditional-fields-container {
+            background-color: #a8c9e6;
+            border-color: #3498db;
+        }
+        
+        body.theme-dark .conditional-fields-container label,
+        body.theme-dark .conditional-fields-container input,
+        body.theme-dark .conditional-fields-container textarea,
+        body.theme-dark-purple .conditional-fields-container label,
+        body.theme-dark-purple .conditional-fields-container input,
+        body.theme-dark-purple .conditional-fields-container textarea,
+        body.theme-dark-green .conditional-fields-container label,
+        body.theme-dark-green .conditional-fields-container input,
+        body.theme-dark-green .conditional-fields-container textarea {
+            color: #333;
+        }
+        
+        body.theme-dark .conditional-fields-container input,
+        body.theme-dark .conditional-fields-container textarea,
+        body.theme-dark-purple .conditional-fields-container input,
+        body.theme-dark-purple .conditional-fields-container textarea,
+        body.theme-dark-green .conditional-fields-container input,
+        body.theme-dark-green .conditional-fields-container textarea {
+            background-color: #ffffff;
+            border-color: #ccc;
+        }
+        
+        /* Additional parts */
+        .additional-parts-wrapper {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+        }
+        
+        .additional-part-group {
+            border-left: 3px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 30px;
+            background-color: var(--highlight-bg);
+            border-radius: 4px;
+        }
+        
+        .add-more-link {
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-decoration: underline;
+        }
+        
+        .add-more-link:hover {
+            text-decoration: none;
+        }
+        
+        .delete-group-btn {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .delete-group-btn:hover {
+            background-color: var(--danger-hover);
+        }
+        
+        /* Preview section */
         #preview {
             background-color: var(--highlight-bg);
             padding: 20px;
@@ -297,18 +364,9 @@
             opacity: 1;
         }
         
+        /* Template controls */
         .template-controls {
             margin-bottom: 30px;
-        }
-        
-        select {
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            font-size: 15px;
-            margin-right: 10px;
-            background-color: var(--card-bg);
-            color: var(--text-color);
         }
         
         /* Theme selector */
@@ -327,7 +385,8 @@
             border: 1px solid var(--border-color);
             cursor: pointer;
         }
-
+        
+        /* Responsive styles */
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -344,11 +403,13 @@
 <body class="theme-blue">
     <!-- Theme selector -->
     <div class="theme-selector">
-        <select id="theme-select">
-            <option value="blue">Blue Theme</option>
+        <select id="theme-select" aria-label="Select color theme">
+            <option value="blue">Light Blue</option>
             <option value="purple">Light Purple</option>
             <option value="green">Light Green</option>
-            <option value="dark">Dark Mode</option>
+            <option value="dark">Dark Mode Blue</option>
+            <option value="dark-purple">Dark Mode Purple</option>
+            <option value="dark-green">Dark Mode Green</option>
             <option value="light">Light Mode</option>
         </select>
     </div>
@@ -363,8 +424,8 @@
                 <label for="template-select">Choose a template:</label>
                 <select id="template-select">
                     <option value="breakfix">Break/Fix Task Notes</option>
+                    <option value="network">Network Task Notes</option>
                     <option value="dbd">DBD Task Notes</option>
-                    <option value="networking">Networking Task Notes</option>
                     <option value="meeting">Meeting Note</option>
                     <option value="project">Project Update</option>
                     <option value="workwindow">Work Window Request Email</option>
@@ -379,28 +440,29 @@
         
         <div class="preview-section">
             <h2>Note Preview</h2>
-            <div id="preview">Your compiled note will appear here...</div>
+            <div id="preview" role="region" aria-live="polite">Your compiled note will appear here...</div>
             <div class="button-group">
                 <button type="button" class="btn btn-copy" id="copy-btn">Copy to Clipboard</button>
                 <button type="button" class="btn btn-reset" id="reset-btn">Reset</button>
             </div>
-            <div class="copy-message" id="copy-message">Note copied to clipboard!</div>
+            <div class="copy-message" id="copy-message" aria-hidden="true">Note copied to clipboard!</div>
         </div>
     </div>
 
     <script>
         // Template definitions
         const templates = {
+            // Break/Fix Task Notes template
             breakfix: {
                 title: "Break/Fix Task Notes",
                 fields: [
                     { name: "taskId", label: "Task ID", type: "text" },
                     { name: "assetTagConfirmed", label: "Was the asset tag visually confirmed?", type: "select", options: ["Yes", "No"] },
                     { name: "uponArrival", label: "Upon Arrival:", type: "textarea" },
-                    { name: "partReplaced", label: "Part(s) Replaced", type: "text" },
-                    { name: "oldSerialNumber", label: "Old Serial Number", type: "text" },
-                    { name: "newSerialNumber", label: "New Serial Number", type: "text" },
-                    { name: "licensePlate", label: "License Plate", type: "text" },
+                    { name: "partReplaced", label: "Part(s) replaced?", type: "checkbox", hasConditionalFields: true },
+                    { name: "oldSerialNumber", label: "Old Serial Number", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "newSerialNumber", label: "New Serial Number", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "licensePlate", label: "License Plate", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
                     { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
                     { name: "wasEscalated", label: "Was this ticket escalated?", type: "checkbox", hasConditionalFields: true },
                     { name: "escalatedTo", label: "Who was it escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } },
@@ -415,48 +477,16 @@ ESCALATION DETAILS:
 - Senior Tech Approval: ${data.seniorTechAlias || "[Not specified]"}`;
                     }
                     
-                    return `TASK ID: ${data.taskId || "[No ID]"}
-ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
-
-UPON ARRIVAL:
-${data.uponArrival || "[No arrival notes recorded]"}
-
-PART(S) REPLACED: ${data.partReplaced || "N/A"}
+                    // Format part replacement information
+                    let partReplacementInfo = "";
+                    if (data.partReplaced === "checked") {
+                        partReplacementInfo = `
+PART(S) REPLACED: Yes
 OLD SERIAL NUMBER: ${data.oldSerialNumber || "N/A"}
 NEW SERIAL NUMBER: ${data.newSerialNumber || "N/A"}
-LICENSE PLATE: ${data.licensePlate || "N/A"}
-
-ACTIONS TAKEN:
-${data.actionsTaken || "[No actions recorded]"}
-
-TICKET ESCALATED: ${data.wasEscalated === "checked" ? "Yes" : "No"}${escalationInfo}`;
-                }
-            },
-            dbd: {
-                title: "DBD Task Notes",
-                fields: [
-                    { name: "taskId", label: "Task ID", type: "text" },
-                    { name: "assetTagConfirmed", label: "Was the asset tag visually confirmed?", type: "select", options: ["Yes", "No"] },
-                    { name: "uponArrival", label: "Upon Arrival:", type: "textarea" },
-                    { name: "partReplaced", label: "Part(s) Replaced", type: "text" },
-                    { name: "oldSerialNumber", label: "Old Serial Number", type: "text" },
-                    { name: "newSerialNumber", label: "New Serial Number", type: "text" },
-                    { name: "licensePlate", label: "License Plate", type: "text" },
-                    { name: "driveLocation", label: "Location of drive being replaced", type: "text" },
-                    { name: "binNumber", label: "Bin #", type: "text" },
-                    { name: "properDiscard", label: "Was the drive discarded in the proper DBD bin?", type: "select", options: ["Yes", "No"] },
-                    { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
-                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "checkbox", hasConditionalFields: true },
-                    { name: "escalatedTo", label: "Who was it escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } },
-                    { name: "seniorTechAlias", label: "Alias of the senior who approved this:", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } }
-                ],
-                format: (data) => {
-                    let escalationInfo = "";
-                    if (data.wasEscalated === "checked") {
-                        escalationInfo = `
-ESCALATION DETAILS:
-- Escalated To: ${data.escalatedTo || "[Not specified]"}
-- Senior Tech Approval: ${data.seniorTechAlias || "[Not specified]"}`;
+LICENSE PLATE: ${data.licensePlate || "N/A"}`;
+                    } else {
+                        partReplacementInfo = "\nPART(S) REPLACED: No";
                     }
                     
                     return `TASK ID: ${data.taskId || "[No ID]"}
@@ -464,14 +494,7 @@ ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
 
 UPON ARRIVAL:
 ${data.uponArrival || "[No arrival notes recorded]"}
-
-PART(S) REPLACED: ${data.partReplaced || "N/A"}
-OLD SERIAL NUMBER: ${data.oldSerialNumber || "N/A"}
-NEW SERIAL NUMBER: ${data.newSerialNumber || "N/A"}
-LICENSE PLATE: ${data.licensePlate || "N/A"}
-DRIVE LOCATION: ${data.driveLocation || "N/A"}
-BIN #: ${data.binNumber || "N/A"}
-DRIVE DISCARDED IN PROPER DBD BIN: ${data.properDiscard || "N/A"}
+${partReplacementInfo}
 
 ACTIONS TAKEN:
 ${data.actionsTaken || "[No actions recorded]"}
@@ -479,22 +502,24 @@ ${data.actionsTaken || "[No actions recorded]"}
 TICKET ESCALATED: ${data.wasEscalated === "checked" ? "Yes" : "No"}${escalationInfo}`;
                 }
             },
-            networking: {
-                title: "Networking Task Notes",
+            
+            // Network Task Notes template
+            network: {
+                title: "Network Task Notes",
                 fields: [
                     { name: "taskId", label: "Task ID", type: "text" },
                     { name: "assetTagConfirmed", label: "Was the asset tag visually confirmed?", type: "select", options: ["Yes", "No"] },
                     { name: "uponArrival", label: "Upon Arrival:", type: "textarea" },
                     { name: "sourceDevice", label: "Source Device:Port", type: "text" },
                     { name: "endDevice", label: "End Device:Port", type: "text" },
-                    { name: "partReplaced", label: "Part(s) Replaced", type: "text" },
-                    { name: "oldSerialNumber", label: "Old Serial Number", type: "text" },
-                    { name: "newSerialNumber", label: "New Serial Number", type: "text" },
-                    { name: "licensePlate", label: "License Plate", type: "text" },
+                    { name: "partReplaced", label: "Part(s) replaced?", type: "checkbox", hasConditionalFields: true },
+                    { name: "oldSerialNumber", label: "Old Serial Number", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "newSerialNumber", label: "New Serial Number", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "licensePlate", label: "License Plate", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
                     { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
-                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "select", options: ["Yes", "No"], hasConditionalFields: true },
-                    { name: "escalatedTo", label: "Who was this escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "Yes" } },
-                    { name: "seniorTechAlias", label: "Alias of Senior that approved the escalation:", type: "text", conditionalOn: { field: "wasEscalated", value: "Yes" } }
+                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "checkbox", hasConditionalFields: true },
+                    { name: "escalatedTo", label: "Who was it escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } },
+                    { name: "seniorTechAlias", label: "Alias of the senior who approved this:", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } }
                 ],
                 format: (data) => {
                     let escalationInfo = "";
@@ -505,18 +530,26 @@ ESCALATION DETAILS:
 - Senior Tech Approval: ${data.seniorTechAlias || "[Not specified]"}`;
                     }
                     
+                    // Format part replacement information
+                    let partReplacementInfo = "";
+                    if (data.partReplaced === "checked") {
+                        partReplacementInfo = `
+PART(S) REPLACED: Yes
+OLD SERIAL NUMBER: ${data.oldSerialNumber || "N/A"}
+NEW SERIAL NUMBER: ${data.newSerialNumber || "N/A"}
+LICENSE PLATE: ${data.licensePlate || "N/A"}`;
+                    } else {
+                        partReplacementInfo = "\nPART(S) REPLACED: No";
+                    }
+                    
                     return `TASK ID: ${data.taskId || "[No ID]"}
 ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
 
 UPON ARRIVAL:
 ${data.uponArrival || "[No arrival notes recorded]"}
-
 SOURCE DEVICE:PORT: ${data.sourceDevice || "N/A"}
 END DEVICE:PORT: ${data.endDevice || "N/A"}
-PART(S) REPLACED: ${data.partReplaced || "N/A"}
-OLD SERIAL NUMBER: ${data.oldSerialNumber || "N/A"}
-NEW SERIAL NUMBER: ${data.newSerialNumber || "N/A"}
-LICENSE PLATE: ${data.licensePlate || "N/A"}
+${partReplacementInfo}
 
 ACTIONS TAKEN:
 ${data.actionsTaken || "[No actions recorded]"}
@@ -524,6 +557,65 @@ ${data.actionsTaken || "[No actions recorded]"}
 TICKET ESCALATED: ${data.wasEscalated === "checked" ? "Yes" : "No"}${escalationInfo}`;
                 }
             },
+            
+            // DBD Task Notes template
+            dbd: {
+                title: "DBD Task Notes",
+                fields: [
+                    { name: "taskId", label: "Task ID", type: "text" },
+                    { name: "assetTagConfirmed", label: "Was the asset tag visually confirmed?", type: "select", options: ["Yes", "No"] },
+                    { name: "uponArrival", label: "Upon Arrival:", type: "textarea" },
+                    { name: "partReplaced", label: "Part(s) replaced?", type: "checkbox", hasConditionalFields: true },
+                    { name: "oldSerialNumber", label: "Old Serial Number", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "newSerialNumber", label: "New Serial Number", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "licensePlate", label: "License Plate", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "driveLocation", label: "Location of drive being replaced", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "binNumber", label: "Bin #", type: "text", conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "properDiscard", label: "Was the drive discarded in the proper DBD bin?", type: "select", options: ["Yes", "No"], conditionalOn: { field: "partReplaced", value: "checked" } },
+                    { name: "actionsTaken", label: "Actions Taken", type: "textarea" },
+                    { name: "wasEscalated", label: "Was this ticket escalated?", type: "checkbox", hasConditionalFields: true },
+                    { name: "escalatedTo", label: "Who was it escalated to?", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } },
+                    { name: "seniorTechAlias", label: "Alias of the senior who approved this:", type: "text", conditionalOn: { field: "wasEscalated", value: "checked" } }
+                ],
+                format: (data) => {
+                    let escalationInfo = "";
+                    if (data.wasEscalated === "checked") {
+                        escalationInfo = `
+ESCALATION DETAILS:
+- Escalated To: ${data.escalatedTo || "[Not specified]"}
+- Senior Tech Approval: ${data.seniorTechAlias || "[Not specified]"}`;
+                    }
+                    
+                    // Format part replacement information
+                    let partReplacementInfo = "";
+                    if (data.partReplaced === "checked") {
+                        partReplacementInfo = `
+PART(S) REPLACED: Yes
+OLD SERIAL NUMBER: ${data.oldSerialNumber || "N/A"}
+NEW SERIAL NUMBER: ${data.newSerialNumber || "N/A"}
+LICENSE PLATE: ${data.licensePlate || "N/A"}
+DRIVE LOCATION: ${data.driveLocation || "N/A"}
+BIN #: ${data.binNumber || "N/A"}
+DRIVE DISCARDED IN PROPER DBD BIN: ${data.properDiscard || "N/A"}`;
+                    } else {
+                        partReplacementInfo = "\nPART(S) REPLACED: No";
+                    }
+                    
+                    return `TASK ID: ${data.taskId || "[No ID]"}
+ASSET TAG CONFIRMED: ${data.assetTagConfirmed || "N/A"}
+
+UPON ARRIVAL:
+${data.uponArrival || "[No arrival notes recorded]"}
+${partReplacementInfo}
+
+ACTIONS TAKEN:
+${data.actionsTaken || "[No actions recorded]"}
+
+TICKET ESCALATED: ${data.wasEscalated === "checked" ? "Yes" : "No"}${escalationInfo}`;
+                }
+            },
+            
+            // Meeting Note template
             meeting: {
                 title: "Meeting Note",
                 fields: [
@@ -549,6 +641,8 @@ ACTION ITEMS:
 ${data.actionItems || "[No action items]"}`;
                 }
             },
+            
+            // Project Update template
             project: {
                 title: "Project Update",
                 fields: [
@@ -576,6 +670,8 @@ REQUIRED RESOURCES:
 ${data.resources || "[None specified]"}`;
                 }
             },
+            
+            // Work Window Request Email template
             workwindow: {
                 title: "Work Window Request Email",
                 fields: [
@@ -593,6 +689,8 @@ We need to schedule a work window for task # ${data.taskId || "SlotA"}. The next
 NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that SS can confirm availability. Important! Please remove traffic if necessary to facilitate a timely start for the WW event.`;
                 }
             },
+            
+            // Custom Template
             custom: {
                 title: "Custom Template",
                 fields: [
@@ -654,7 +752,7 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
         // Function to set the theme
         function setTheme(theme) {
             // Remove all theme classes
-            document.body.classList.remove('theme-blue', 'theme-purple', 'theme-green', 'theme-dark', 'theme-light');
+            document.body.classList.remove('theme-blue', 'theme-purple', 'theme-green', 'theme-dark', 'theme-dark-purple', 'theme-dark-green','theme-light');
             // Add the selected theme class
             document.body.classList.add(`theme-${theme}`);
             
@@ -757,12 +855,6 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     conditionalContainer.id = `conditional-container-${field.name}`;
                     conditionalContainer.className = 'conditional-fields-container';
                     conditionalContainer.style.display = 'none';
-                    conditionalContainer.style.paddingLeft = '15px';
-                    conditionalContainer.style.borderLeft = '3px solid #3498db';
-                    conditionalContainer.style.marginTop = '5px';
-                    conditionalContainer.style.marginBottom = '15px';
-                    conditionalContainer.style.backgroundColor = '#f1f9ff';
-                    conditionalContainer.style.padding = '15px';
                     
                     // Add each conditional field to the container
                     conditionalFields.forEach(condField => {
@@ -776,6 +868,21 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                         let condInput;
                         if (condField.type === 'textarea') {
                             condInput = document.createElement('textarea');
+                        } else if (condField.type === 'select' && condField.options) {
+                            condInput = document.createElement('select');
+                            // Add an empty option first
+                            const emptyOption = document.createElement('option');
+                            emptyOption.value = '';
+                            emptyOption.textContent = '-- Select --';
+                            condInput.appendChild(emptyOption);
+                            
+                            // Add the rest of the options
+                            condField.options.forEach(optionText => {
+                                const option = document.createElement('option');
+                                option.value = optionText;
+                                option.textContent = optionText;
+                                condInput.appendChild(option);
+                            });
                         } else {
                             condInput = document.createElement('input');
                             condInput.type = condField.type;
@@ -793,24 +900,38 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     // Add the conditional container after the parent field
                     templateForm.appendChild(conditionalContainer);
                     
+                    // Add "Add More Parts" functionality for part replacement sections
+                    if (field.name === 'partReplaced' && ['breakfix', 'dbd', 'network'].includes(currentTemplate)) {
+                        // Create wrapper for additional parts
+                        const additionalPartsWrapper = document.createElement('div');
+                        additionalPartsWrapper.className = 'additional-parts-wrapper';
+                        
+                        // Create container for additional parts
+                        const additionalPartsContainer = document.createElement('div');
+                        additionalPartsContainer.id = 'additional-parts-container';
+                        additionalPartsWrapper.appendChild(additionalPartsContainer);
+                        
+                        // Add the "Add More Parts" link
+                        const addMoreContainer = document.createElement('div');
+                        addMoreContainer.id = 'add-more-container';
+                        
+                        const addMoreLink = document.createElement('div');
+                        addMoreLink.className = 'add-more-link';
+                        addMoreLink.textContent = '+ Add More Parts';
+                        addMoreLink.addEventListener('click', addMoreParts);
+                        
+                        addMoreContainer.appendChild(addMoreLink);
+                        additionalPartsWrapper.appendChild(addMoreContainer);
+                        
+                        // Add the wrapper to the conditional container
+                        conditionalContainer.appendChild(additionalPartsWrapper);
+                    }
+                    
                     // Check initial state (for when the form is reset but the triggering field is set)
                     if ((field.type === 'checkbox' && input.checked) || 
-                        (field.type === 'select' && input.value === conditionalFields[0].conditionalOn.value)) {
+                        (field.type === 'select' && input.value === conditionalFields[0]?.conditionalOn?.value)) {
                         conditionalContainer.style.display = 'block';
                     }
-                }
-                
-                // Create container for additional parts after the appropriate field
-                if ((field.name === 'licensePlate' && currentTemplate === 'breakfix') ||
-                    (field.name === 'properDiscard' && currentTemplate === 'dbd') ||
-                    (field.name === 'licensePlate' && currentTemplate === 'networking')) {
-                    
-                    const additionalPartsContainer = document.createElement('div');
-                    additionalPartsContainer.id = 'additional-parts-container';
-                    templateForm.appendChild(additionalPartsContainer);
-                    
-                    // Add the "Add More Parts" link
-                    addAddMoreButton(templateForm);
                 }
             });
         }
@@ -825,43 +946,29 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
                     container.style.display = 'none';
                     // Clear all input fields in the container
                     const inputs = container.querySelectorAll('input, textarea, select');
-                    inputs.forEach(input => input.value = '');
+                    inputs.forEach(input => {
+                        if (input.type === 'checkbox') {
+                            input.checked = false;
+                        } else {
+                            input.value = '';
+                        }
+                    });
+                    
+                    // If this is the partReplaced checkbox, also reset additional parts
+                    if (checkbox.id === 'partReplaced') {
+                        resetAdditionalParts();
+                    }
                 }
             }
         }
         
-        // Function to add the "Add More Parts" button
-        function addAddMoreButton(parentElement) {
-            const existingButton = document.getElementById('add-more-container');
-            if (existingButton) {
-                existingButton.remove();
+        // Function to reset additional parts
+        function resetAdditionalParts() {
+            const additionalPartsContainer = document.getElementById('additional-parts-container');
+            if (additionalPartsContainer) {
+                additionalPartsContainer.innerHTML = '';
             }
-            
-            const addMoreContainer = document.createElement('div');
-            addMoreContainer.id = 'add-more-container';
-            
-            const addMoreLink = document.createElement('div');
-            addMoreLink.className = 'add-more-link';
-            addMoreLink.textContent = '+ Add More Parts';
-            addMoreLink.addEventListener('click', addMoreParts);
-            
-            addMoreContainer.appendChild(addMoreLink);
-            parentElement.appendChild(addMoreContainer);
-        }
-        
-        // Function to check if conditional field should be shown
-        function shouldShowConditionalField(field) {
-            if (!field.conditionalOn) return true;
-            
-            const dependsOnField = document.getElementById(field.conditionalOn.field);
-            if (!dependsOnField) return false;
-            
-            // For checkbox dependency
-            if (dependsOnField.type === 'checkbox') {
-                return (field.conditionalOn.value === "checked" && dependsOnField.checked);
-            }
-            // For select or other field types
-            return dependsOnField.value === field.conditionalOn.value;
+            additionalPartsCounter = 0;
         }
         
         // Function to handle showing/hiding conditional fields
@@ -956,9 +1063,6 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             container.appendChild(partGroup);
             
             updatePreview();
-            
-            // Move the Add More button
-            addAddMoreButton(container);
         }
         
         // Helper function to create form fields
@@ -989,15 +1093,6 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             if (partGroup) {
                 partGroup.remove();
                 updatePreview();
-                
-                const container = document.getElementById('additional-parts-container');
-                const parts = container.querySelectorAll('.additional-part-group');
-                
-                if (parts.length > 0) {
-                    addAddMoreButton(container);
-                } else {
-                    addAddMoreButton(templateForm);
-                }
             }
         }
         
@@ -1020,7 +1115,7 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             });
             
             // Collect values from additional parts
-            if (['breakfix', 'dbd', 'networking'].includes(currentTemplate)) {
+            if (['breakfix', 'dbd', 'network'].includes(currentTemplate)) {
                 formData.additionalParts = [];
                 
                 // Look for all additional parts in the DOM
@@ -1060,7 +1155,7 @@ NOTE: For every work window we will need a MINIMUM of 24 hours' notice so that S
             let formattedNote = template.format(formData);
             
             // Add additional parts info to the formatted note
-            if (['breakfix', 'dbd', 'networking'].includes(currentTemplate) && 
+            if (['breakfix', 'dbd', 'network'].includes(currentTemplate) && 
                 formData.additionalParts && 
                 formData.additionalParts.length > 0) {
                 
@@ -1157,17 +1252,8 @@ LICENSE PLATE: ${part.licensePlate || "N/A"}`;
                 checkbox.checked = false;
             });
             
-            // Remove additional parts
-            const additionalPartsContainer = document.getElementById('additional-parts-container');
-            if (additionalPartsContainer) {
-                additionalPartsContainer.innerHTML = '';
-            }
-            additionalPartsCounter = 0;
-            
-            // Reset add more button position
-            if (['breakfix', 'dbd', 'networking'].includes(currentTemplate)) {
-                addAddMoreButton(templateForm);
-            }
+            // Reset additional parts
+            resetAdditionalParts();
             
             updatePreview();
         }
